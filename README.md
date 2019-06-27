@@ -105,7 +105,7 @@ EFI
         - [`AppleALC.kext`](https://github.com/acidanthera/AppleALC/releases) 让macOS可以正确识别主板上的RealTek集成声卡
         - [`VirtualSMC.kext`](https://github.com/acidanthera/VirtualSMC/releases) 模拟SMC, 不可或缺
         - [`WhateverGreen.kext`](https://github.com/acidanthera/WhateverGreen/releases) 解决iGPU, AMD/nVidia GPU的各种问题,
-        - 其他的几个kext, 根据需要使用, 比如[`IntelMausiEthernet.kext`](EFI/OC/Drivers/IntelMausiEthernet.kext)(Justin根据[Mieze的源代码](https://github.com/Mieze/IntelMausiEthernet)编译)驱动板载intel网卡, [`SMCProcessor.kext SMCSuperIO.kext`](https://github.com/acidanthera/VirtualSMC/releases) 让macOS下的监控软件可以读取主板上的传感器信息温度,频率等
+        - 其他的几个kext, 根据需要使用, 比如[`IntelMausiEthernet.kext`](EFI/OC/Kexts/IntelMausiEthernet.kext)(Justin根据[Mieze的源代码](https://github.com/Mieze/IntelMausiEthernet)编译)驱动板载intel网卡, [`SMCProcessor.kext SMCSuperIO.kext`](https://github.com/acidanthera/VirtualSMC/releases) 让macOS下的监控软件可以读取主板上的传感器信息温度,频率等
     - `Tools` 工具类efi,这些工具在OpenCore启动界面可以看到, 目前只有下面2个工具, **不可以放入Drivers文件夹**
         - [`CleanNvram.efi`](https://github.com/acidanthera/AptioFixPkg/releases) 清空nvram, 等效于启动到macOS恢复模式之后, 运行 `nvram -c`
         - [`Shell.efi`](https://github.com/acidanthera/OpenCoreShell/releases) 一个修改版的 `UEFI SHELL`, 可以做很多有趣的事情.
