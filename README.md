@@ -161,14 +161,14 @@ EFI
 
 1. 如果config.plist里面有条目, 但是OC文件夹下面的子文件夹没有对应的文件, 启动会报错, 所以两者必须是一一对应.条目被设置为`Enabled=NO`,除外.
 1. 如果你想新增一个条目, 那么可以右键点击已有条目,选择 Duplicate, 然后做相应的修改
-1. 如果你是从Clover过来的, 使用了比如`rename EHC1 to ECH0`, 这样的补丁, 可以将他们添加到config.plist/ACPI/Pacth, 并设置Enabled=YES 让其生效. 注意Count=0 表示搜索整个DSDT表, Skip=0 表示从头搜到尾, TableSignature=44534454 表示搜索DSDT表(因为DSDT的hex为44534454), TableSignature=0 表示搜索整个ACPI表, 包括SSDT表.
+1. 如果你是从Clover过来的, 使用了比如`rename EHC1 to EHC0`, 这样的补丁, 可以将他们添加到config.plist/ACPI/Patch, 并设置Enabled=YES 让其生效. 注意Count=0 表示搜索整个DSDT表,直到搜不到为止, Skip=0 表示从头搜到尾. TableSignature=44534454 表示搜索DSDT表(因为DSDT的hex为44534454), TableSignature=0 表示搜索整个ACPI表, 包括SSDT表.
 1. config.plist里面有很多Quirks, 可以理解为作者预设好的补丁, 减轻使用者的负担, 每个Quirks的作用, 可以查阅`Docs/Configuration.pdf`
 1. DeviceProperties/Add 里面的参数, 可以设置比如iGPU的`AAPL,ig-platform-id`等等
 1. Kernel/Patch 是用来给macOS的内置kext打补丁的, 比如可以用来去掉USB限制, [每个版本的代码不一样, 详见这里](https://hackintosher.com/forums/thread/list-of-hackintosh-usb-port-limit-patches-10-14-updated.467/) , 当然Enabled=YES才会生效
-    - 作者预设了一个 XhciPortLimit 的 Quirks 补丁, 可以试试看, 或许能替代上面的方法, 我给的config.plist已经把这个设置为YES, 方便首次安装的朋友
+    - 作者预设了一个 XhciPortLimit 的 Quirks 补丁, 可以试试看, 或许能替代上面的方法, 我给的config.plist已经把这个设置为YES, 方便首次安装的朋友, 如果你使用了Patch的方法, 那么设置此项目为NO
 1. 我的 config.plist 已经设置 AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, 这是解决CFG LOCK问题的临时办法, 如果你的主板可以在BIOS里面关闭 CFG LOCK 或者你知道如何用Grub来关闭CFG LOCK, 可以设置这两个项目为NO.
 1. 启动参数在`NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82/boot-args` 这里加入或者修改. 
-1. 最后这个config.plist是没有序列号等等信息的, 只需要填 PlatformInfo/Generic 里面的5个项目, **不用理会** `DataHub, PlatformNVRAM, SMBIOS`, 可以使用[macserial](https://github.com/acidanthera/macserial/releases)生成或者用它查看你现有的.
+1. 最后, 这个config.plist是没有序列号等等信息的, 只需要填 PlatformInfo/Generic 里面的5个项目, **不用理会** `DataHub, PlatformNVRAM, SMBIOS`, 可以使用[macserial](https://github.com/acidanthera/macserial/releases)生成或者用它查看你现有的.
     - 如果你是Clover转换过来的, 运行
         ```sh
         macserial
