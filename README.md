@@ -178,7 +178,7 @@ EFI
     - 如果是全新安装OpenCore,那么 
         - 先确认你要使用的机型 (SystemProductName), 比如iMac19,2, 比如iMacPro1,1, 然后运行
             ```sh
-            macserial --m iMac19,2 -g
+            macserial -m iMac19,2 -g
             ```
             会生成 SystemSerialNumber | MLB, 比如
             ````
