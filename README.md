@@ -1,5 +1,6 @@
 # Wiki
 [wiki](https://github.com/cattyhouse/oc-guide/wiki) 会放一些OpenCore使用过程中的一些经验
+
 # 关于本文
 - 尽可能用最简单的语言描述OpenCore安装和启动黑苹果.
 - 不提供最终的启动文件,而是提供方法.有了正确的方法, 就可以完全掌控自己的电脑.
@@ -22,7 +23,9 @@
 - 制作一个macOS启动U盘, 直接采用苹果官方提供的方法.
 - 生成一个OpenCore的EFI放在U盘, 将macOS安装到PC并启动
 - 复制U盘上的EFI到安装好macOS的SSD上, 从SSD启动macOS, 脱离U盘.
+
 # OpenCore的优缺点
+
 ## 优点
 - 结构非常简单,没有安装文件pkg,跟搭积木一样简单,就算没有任何黑苹果经验, 也很容易上手
 - 体积非常小, 只有9k的`BOOTx64.efi`启动文件和~200KB的`OpenCore.efi`主文件
@@ -32,9 +35,11 @@
 - 稳定, 非常稳定
 - 安全, 可以选择对自身做签名,防止篡改
 - 配置文件有严格的一一对应的要求, 所以你知道自己在干什么.
+
 ## 缺点
 - 目前处于开发阶段, 更新会比较勤, 变动可能会比较大, 不过作者会做详细的变动记录,文档都及时更新
 - Clover的某些功能在OpenCore上面缺失, 不过目前的功能完全够用
+
 # 制作macOS启动U盘
 > 以下方法来自苹果官网
 - [格式化U盘](https://support.apple.com/zh-cn/HT208496)
@@ -42,6 +47,7 @@
     - 选择`GUID分区表`以及`Mac OS 扩展格式`
     - 启动盘U盘一定要使用`Mac OS 扩展格式`, 否则后面的步骤无法操作
 - [创建启动盘](https://support.apple.com/zh-cn/HT201372)
+
 # 挂载U盘的EFI分区
 > 挂载EFI分区,供安装OpenCore使用
 - macOS下的方法, 打开终端.app, 执行以下命令
@@ -58,13 +64,17 @@
         sudo diskutil mount /dev/disk4s1
         ```
 - Windows下的方法
+    
     - 由于我已经很久没有用Windows了, 各位可以Google一下, 应该有无数种软件可以做到.
 - Linux下的方法
+    
     - 这对于Linux用户来说小case, 不做阐述
 
 # OpenCore安装与配置
+
 ## OpenCore的文件结构
 > 首先, 我们看看一个已经配置好的OpenCore v0.03 的文件结构, 在EFI分区 (/Volumes/EFI/)下面, 有一个EFI文件夹, 内容如下
+
 ````
 EFI
 │   ├── BOOT
@@ -92,7 +102,9 @@ EFI
 │       └── config.plist
 
 ````
+
 > 简单说明如下
+
 - `EFI/BOOT/BOOTx64.efi` 电脑启动的时候读取的引导文件, 前面说过, 只有9KB
 - `EFI/OC` OpenCore存放目录
     - `ACPI` 存放自定义的ssdt aml文件, 比如
@@ -130,6 +142,7 @@ EFI
 
 ## 搭积木 - 从零开始组建OpenCore
 > 相信看完 `OpenCore的文件结构`, 心里已经有底了, 我们从0开始玩, 以下终端操作, 当然也可以在Finder里面鼠标操作, 结果是一样.
+
 - 用前面挂载EFI的方法, 我们进入macOS启动U盘的EFI分区
     ```sh
     cd /Volumes/EFI/
@@ -151,6 +164,7 @@ EFI
 - 积木搭建完毕
 
 ## 配置config.plist
+
 > config.plist 请使用PlistEdit Pro 或者 Xcode 进行可视化编辑
 
 > 关于配置, 作者有非常详细的[英文文档](OpenCore-v0.0.3-RELEASE.zip), 解压后在`Docs/Configuration.pdf` 如果你有兴趣,可以从头到尾看一遍, 然后在`SampleFull.plist`的基础上做修改, 我已经配置了一个非常基本的[config.plist](EFI/OC/config.plist),你可以以我的这个为基础继续配置, 会大大提高成功概率和节约时间, 由于篇幅有限,我不打算每一个项目都过一遍, 只列出注意事项:
@@ -172,6 +186,7 @@ EFI
 1. config.plist里面有很多Quirks, 可以理解为作者预设好的补丁, 减轻使用者的负担, 每个Quirks的作用, 可以查阅`Docs/Configuration.pdf`
 1. DeviceProperties/Add 里面的参数, 可以设置比如iGPU的`AAPL,ig-platform-id`等等
 1. Kernel/Patch 是用来给macOS的内置kext打补丁的, 比如可以用来去掉USB限制, [每个版本的代码不一样, 详见这里](https://hackintosher.com/forums/thread/list-of-hackintosh-usb-port-limit-patches-10-14-updated.467/) , 当然Enabled=YES才会生效
+    
     - 作者预设了一个 XhciPortLimit 的 Quirks 补丁, 可以试试看, 或许能替代上面的方法, 我给的config.plist已经把这个设置为YES, 方便首次安装的朋友, 如果你使用了Patch的方法, 那么设置此项目为NO
 1. 我的 config.plist 已经设置 AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, 这是解决CFG LOCK问题的临时办法, 如果你的主板可以在BIOS里面关闭 CFG LOCK 或者你知道如何用Grub来关闭CFG LOCK, 可以设置这两个项目为NO.
 1. 启动参数在`NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82/boot-args` 这里加入或者修改. 
@@ -203,11 +218,3 @@ EFI
 1. ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `所有OpenCore使用的 *.efi 文件请不要从Clover拿过来用, 他们并不是很兼容, OpenCore所需的这些文件文中都给出了原作者链接. kexts文件也给出了最新的原作者链接.`
 
 # 未完待续
-
-
-    
-
-
-
-
-    
