@@ -196,6 +196,10 @@ EFI
             0268B329DA98
             ````
 1. ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `所有OpenCore使用的 *.efi 文件请不要从Clover拿过来用, 他们并不是很兼容, OpenCore所需的这些文件文中都给出了原作者链接. kexts文件也给出了最新的原作者链接.`
+1. 新增kext的注意事项
+    - 以附图为例![附图](pics/addkext.png)
+    - 注意kext里面是否有可执行文件, 如果有, 需要按图填入 `ExecutablePath` 如果没有,这个地方留空.
+    - 查看kext的内容, 可以右键点击kext, 然后选择`show package contents`
 # 未完待续
 
 
