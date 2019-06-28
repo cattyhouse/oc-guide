@@ -160,6 +160,7 @@ EFI
     - `OC/Drivers/*.efi` 对应 `config.plist/UEFI/Drivers`
     - `OC/Kexts/*.kext` 对应 `config.plist/Kernel/Add`
     - `OC/Tools/*.efi` 对应 `config.plist/Misc/Tools`
+    - 附图举例, `config.plist/UEFI/Driver/` 下面配置了5个条目, 要保证 `EFI/OC/Drivers/` 下面有这5个efi, 否则启动会提示出错. 同样 `EFI/OC/Drivers/` 下面如果有efi没有加入config.plist里面,是不会被加载的. 所以我上面提到的这4个一一对应的地方, 要反复核对, 确保没有疏忽. ![1to1](pics/1to1.png)
 
 1. 如果config.plist里面有条目, 但是OC文件夹下面的子文件夹没有对应的文件, 启动会报错, 所以两者必须是一一对应.条目被设置为`Enabled=NO`,除外.
 1. 如果你想新增一个条目, 那么可以右键点击已有条目,选择 Duplicate, 然后做相应的修改
