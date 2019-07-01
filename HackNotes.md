@@ -252,9 +252,9 @@ FF FF FF FF 00 00 FF FF FF
 https://github.com/acidanthera/bugtracker/issues/365
    
 ##  ACPI error 查看方法 
-    ````
-    log show --predicate "processID=0" --last boot | grep -i "ACPI" | grep -i -C5 error
-    ````
+````
+log show --predicate "processID=0" --last boot | grep -i "ACPI" | grep -i -C5 error
+````
 
 ## 修复设置错误的显示器配置
 
@@ -278,12 +278,12 @@ rm -f com.apple.preference.displays*
     `setup_var [setup_var_2,setup_var_3] offset value `
 
 
-## using rdisk for dd 速递快很多
+## using rdisk for dd 速度快很多
 
 ````
 sudo dd if=/Users/jst/Downloads/archlinux-2019.04.01-x86_64.iso of=/dev/rdisk4 bs=4m
 ````
-##  隐藏 hide 不自动 mount 磁盘
+##  隐藏/hide/不自动mount 磁盘
 
 - 找分区的UUID
 
@@ -342,7 +342,7 @@ cp Build/MdeModule/RELEASE_XCODE5/X64/VariableRuntimeDxe.efi ~/Desktop/
     ````
 
 
-## 磁盘修复
+## APFS错误修复
 
 ````
 不需要进入recovery,
@@ -350,7 +350,7 @@ sudo diskutil verifydisk disk0
 sudo diskutil repairdisk disk0
 ````
 
-## USB limit patch for 10.15 Catalina
+## USB limit patch for 10.15 Catalina beta 1/2
 
 ````
 com.apple.iokit.IOUSBHostFamily
