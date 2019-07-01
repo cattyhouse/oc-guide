@@ -1,6 +1,8 @@
 # Wiki
 [wiki](https://github.com/cattyhouse/oc-guide/wiki) 会放一些OpenCore使用过程中的一些经验
 
+# [我的一些黑苹果笔记](HackNotes.md)
+
 # 关于本文
 - 尽可能用最简单的语言描述OpenCore安装和启动黑苹果.
 - 不提供最终的启动文件,而是提供方法.有了正确的方法, 就可以完全掌控自己的电脑.
