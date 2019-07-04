@@ -10,7 +10,7 @@
 - 进入到了安装界面之后, 需要联网, 后面的安装过程需要从Apple的服务器获取所需文件, 通常都会跑满你的带宽, 所以其实并不算一个缺点.
 
 ## 步骤
-1. 配置好OpenCore的EFI
+1. [配置好OpenCore的EFI](https://github.com/cattyhouse/oc-guide)
 2. 下载Recovery的DMG
     1. 获取[php脚本](https://raw.githubusercontent.com/acidanthera/OcSupportPkg/master/Utilities/Recovery/obtain_recovery.php)
     1. 获取下载DMG的命令的[参考文件](https://raw.githubusercontent.com/acidanthera/OcSupportPkg/master/Utilities/Recovery/recovery_urls.txt)
