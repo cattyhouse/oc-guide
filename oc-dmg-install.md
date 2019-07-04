@@ -30,13 +30,13 @@
 8. 最终U盘上的文件结构看起来像这样:
 
     ````
-    ├── EFI
-    ├── BOOT
-    ├── OC
-    └── Tools
+    EFI
+        ├── BOOT
+        ├── OC
+        └── Tools
     com.apple.recovery.boot
-    ├── RecoveryImage.chunklist
-    └── RecoveryImage.dmg
-    └── .contentDetails
+        ├── RecoveryImage.chunklist
+        └── RecoveryImage.dmg
+        └── .contentDetails
     ````
 9. 用U盘启动电脑选择 `Mojave Boot From Recovery`, 接下来就进入正常的安装界面
