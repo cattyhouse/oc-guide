@@ -75,8 +75,9 @@
 
 > 此为无需制作启动盘的安装方法
 
-> 此方法源自OpenCore的文档, 需要先配置好OpenCore, 然后用它来启动Recovery的DMG.有兴趣的可以继续看
-[OpenCore从Recovery的DMG安装macOS各种版本](oc-dmg-install.md)
+> 此方法源自OpenCore的文档, 需要先配置好OpenCore, 然后用它来启动Recovery的DMG.有兴趣的可以继续看:
+
+> [OpenCore从Recovery的DMG安装macOS各种版本](oc-dmg-install.md)
 
 # OpenCore安装与配置
 
