@@ -135,7 +135,7 @@ EFI
 
 > 所以, OC下面总共有4个文件夹, 2个主文件, 是不是非常简洁
 
-## 编译 OpenCore
+## 编译/下载 OpenCore
 - 编译并不是必须的, 作者有提供0.02的版本下载, 不过我目前用的是 0.03 版本, 需要编译
 - 编译非常简单, 不要怕, 作者什么都写好了
 - 编译不需要安装体积巨大的Xcode, 代码如下
@@ -145,7 +145,8 @@ EFI
     ./macbuild.tool
     cp Binaries/RELEASE/OpenCore-*-RELEASE.zip ~/Desktop
     ```
-- 我已经提供[编译好的0.03版本](OpenCore-v0.0.3-RELEASE.zip)
+- ~~我已经提供[编译好的0.03版本](OpenCore-v0.0.3-RELEASE.zip)~~
+- [原作者已经Release了0.03](https://github.com/acidanthera/OpenCorePkg/releases/download/v0.0.3/OpenCore-v0.0.3-RELEASE.zip), 建议使用.
 
 ## 搭积木 - 从零开始组建OpenCore
 > 相信看完 `OpenCore的文件结构`, 心里已经有底了, 我们从0开始玩, 以下终端操作, 当然也可以在Finder里面鼠标操作, 结果是一样.
