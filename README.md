@@ -121,7 +121,7 @@ EFI
         - [`ApfsDriverLoader.efi`](https://github.com/acidanthera/AppleSupportPkg/releases) 用于加载macOS内置的apfs.efi,读取APFS分区
         - [`AptioMemoryFix.efi`](https://github.com/acidanthera/AptioFixPkg/releases) fix BIOS firmware, 让macOS可以正确启动
         - [`EmuVariableRuntimeDxe.efi`](EFI/OC/Drivers/EmuVariableRuntimeDxe.efi) 大部分100/200/300系列的主板的nvram无法被macOS访问, 这个efi提供一个模拟的nvram, Justin从[UDK 2018](https://github.com/tianocore/edk2/tree/UDK2018)的源代码编译
-        - [`HFSPlus.efi`](EFI/OC/Drivers/HFSPlus.efi) 提供HFS+文件系统的支持, 目前macOS的安装U盘以及Recovery分区需要此efi
+        - [`HFSPlus.efi`](EFI/OC/Drivers/HFSPlus.efi) 提供HFS+文件系统的支持, 读取macOS的安装U盘以及Recovery分区需要此efi
     - `Kexts` 存放各种设备和硬件的驱动或者补丁.
         - [`Lilu.kext`](https://github.com/acidanthera/Lilu/releases) 一个框架式的kext,自身单独使用没有作用, 是其他kext的依赖, 必须第一个被加载.
         - [`AppleALC.kext`](https://github.com/acidanthera/AppleALC/releases) 让macOS可以正确识别主板上的RealTek集成声卡
@@ -137,7 +137,7 @@ EFI
 > 所以, OC下面总共有4个文件夹, 2个主文件, 是不是非常简洁
 
 ## 编译/下载 OpenCore
-- 编译并不是必须的, 作者有提供0.02的版本下载, 不过我目前用的是 0.03 版本, 需要编译
+- 编译并不是必须的, ~~作者有提供0.02的版本下载~~, 不过我目前用的是 0.03 版本, ~~需要编译~~
 - 编译非常简单, 不要怕, 作者什么都写好了
 - 编译不需要安装体积巨大的Xcode, 代码如下
     ```sh
@@ -150,7 +150,7 @@ EFI
 - [原作者已经Release了0.03](https://github.com/acidanthera/OpenCorePkg/releases/download/v0.0.3/OpenCore-v0.0.3-RELEASE.zip), 建议使用.
 
 ## 搭积木 - 从零开始组建OpenCore
-> 相信看完 `OpenCore的文件结构`, 心里已经有底了, 我们从0开始玩, 以下终端操作, 当然也可以在Finder里面鼠标操作, 结果是一样.
+> 相信看完 [OpenCore的文件结构](https://github.com/cattyhouse/oc-guide#opencore的文件结构), 心里已经有底了, 我们从0开始玩, 以下终端操作, 当然也可以在Finder里面鼠标操作, 结果是一样.
 
 - 用前面挂载EFI的方法, 我们进入macOS启动U盘的EFI分区
     ```sh
