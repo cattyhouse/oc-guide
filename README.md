@@ -145,7 +145,7 @@ EFI
     ./macbuild.tool
     cp Binaries/RELEASE/OpenCore-*-RELEASE.zip ~/Desktop
     ```
-- ~~我已经提供[编译好的0.03版本](OpenCore-v0.0.3-RELEASE.zip)~~
+- ~~我已经提供编译好的0.03版本~~
 - [原作者已经Release了0.03](https://github.com/acidanthera/OpenCorePkg/releases/download/v0.0.3/OpenCore-v0.0.3-RELEASE.zip), 建议使用.
 
 ## 搭积木 - 从零开始组建OpenCore
