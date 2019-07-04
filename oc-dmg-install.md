@@ -33,7 +33,6 @@
     EFI
         ├── BOOT
         ├── OC
-        └── Tools
     com.apple.recovery.boot
         ├── RecoveryImage.chunklist
         └── RecoveryImage.dmg
