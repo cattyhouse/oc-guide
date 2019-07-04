@@ -25,8 +25,8 @@
 5. 在U盘的 **根目录** 创建一个文件夹名字叫做: **`com.apple.recovery.boot`**
 6. 将 **RecoveryImage.dmg** 和 **RecoveryImage.chunklist** 复制到 **`com.apple.recovery.boot`** 里面
 7. 给启动文件命名
-    - 在文件夹 **`com.apple.recovery.boot`** 下面新建一个隐藏文件 **`.contentDetails`**
-    - 内容可以随便写, 比如 `Mojave Boot From Recovery`, 这个名字会出现在OpenCore的启动菜单上.
+    1. 在文件夹 **`com.apple.recovery.boot`** 下面新建一个隐藏文件 **`.contentDetails`**
+    1. 内容可以随便写, 比如 `Mojave Boot From Recovery`, 这个名字会出现在OpenCore的启动菜单上.
 8. 最终U盘上的文件结构看起来像这样:
 
     ````
