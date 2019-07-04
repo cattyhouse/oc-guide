@@ -176,7 +176,7 @@ EFI
 
 > config.plist 请使用PlistEdit Pro 或者 Xcode 进行可视化编辑
 
-> 关于配置, 作者有非常详细的[英文文档](OpenCore-v0.0.3-RELEASE.zip), 解压后在`Docs/Configuration.pdf` 如果你有兴趣,可以从头到尾看一遍, 然后在`SampleFull.plist`的基础上做修改, 我已经配置了一个非常基本的[config.plist](EFI/OC/config.plist),你可以以我的这个为基础继续配置, 会大大提高成功概率和节约时间, 由于篇幅有限,我不打算每一个项目都过一遍, 只列出注意事项:
+> 关于配置, 作者有非常详细的 [英文文档](https://github.com/acidanthera/OpenCorePkg/releases/download/v0.0.3/OpenCore-v0.0.3-RELEASE.zip), 解压后在`Docs/Configuration.pdf` 如果你有兴趣,可以从头到尾看一遍, 然后在`SampleFull.plist`的基础上做修改, 我已经配置了一个非常基本的[config.plist](EFI/OC/config.plist),你可以以我的这个为基础继续配置, 会大大提高成功概率和节约时间, 由于篇幅有限,我不打算每一个项目都过一遍, 只列出注意事项:
 
 1. EFI下面的每一个 kext, efi, aml, 都必须在config.plist里面有对应的条目, 且设置为`Enabled=YES`, 否则他们不会加载
     - `OC/ACPI/*.aml` 对应 `config.plist/ACPI/Add`
