@@ -1,3 +1,14 @@
+
+# 更新记录
+- 本文适用于OpenCore 0.03 版本.
+- OpenCore 0.04 版本开始, 有比较大的变化:
+    - AptioMemoryFix.efi 已经弃用, 功能移到了 OpenCore/config.plist/Booter 
+    - FwRuntimeServices.efi 取代了 VariableRunEmutimeDxe.efi 和 EmuVariableRuntimeDxe.efi. 
+    - 但总体结构上保持一致.
+- OpenCore 0.5 版本开始公测
+    - 尝试模拟白苹果行为, 比如按住CMD+R的同时开机, 进入恢复模式, 等等.
+
+
 # Wiki
 [wiki](https://github.com/cattyhouse/oc-guide/wiki) 会放一些OpenCore使用过程中的一些经验
 
@@ -121,7 +132,7 @@ EFI
     - `Drivers` 存放文件系统驱动文件, 比如
         - [`ApfsDriverLoader.efi`](https://github.com/acidanthera/AppleSupportPkg/releases) 用于加载macOS内置的apfs.efi,读取APFS分区
         - [`AptioMemoryFix.efi`](https://github.com/acidanthera/AptioFixPkg/releases) fix BIOS firmware, 让macOS可以正确启动
-        - [`EmuVariableRuntimeDxe.efi`](EFI/OC/Drivers/EmuVariableRuntimeDxe.efi) 大部分100/200/300系列的主板的nvram无法被macOS访问, 这个efi提供一个模拟的nvram, Justin从[UDK 2018](https://github.com/tianocore/edk2/tree/UDK2018)的源代码编译
+        - [`VariableRunEmutimeDxe.efi`](EFI/OC/Drivers/EmuVariableRuntimeDxe.efi) 大部分100/200/300系列的主板的nvram无法被macOS访问, 这个efi提供一个模拟的nvram, Justin从[UDK 2018](https://github.com/tianocore/edk2/tree/UDK2018)的源代码编译
         - [`HFSPlus.efi`](EFI/OC/Drivers/HFSPlus.efi) 提供HFS+文件系统的支持, 读取macOS的安装U盘以及Recovery分区需要此efi
     - `Kexts` 存放各种设备和硬件的驱动或者补丁.
         - [`Lilu.kext`](https://github.com/acidanthera/Lilu/releases) 一个框架式的kext,自身单独使用没有作用, 是其他kext的依赖, 必须第一个被加载.
