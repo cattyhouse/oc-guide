@@ -12,18 +12,14 @@
 ## 步骤
 1. [配置好OpenCore的EFI](https://github.com/cattyhouse/oc-guide)
 2. 下载Recovery的DMG
-    1. 获取[php脚本](https://raw.githubusercontent.com/acidanthera/OcSupportPkg/master/Utilities/Recovery/obtain_recovery.php)
-    1. 获取下载DMG的命令的[参考文件](https://raw.githubusercontent.com/acidanthera/OcSupportPkg/master/Utilities/Recovery/recovery_urls.txt)
-    1. 以Linux/macOS平台下面, 下载Mojave的DMG为例子, 进入obtain_recovery.php所在的文件夹,参考recovery_urls.txt 运行:
-    
-        `php obtain_recovery.php 00000000000KXPG00 Mac-7BA5B2DFE22DDD8C`
-
-    1. 会下载2个文件, 分别为 **RecoveryImage.dmg** 和 **RecoveryImage.chunklist**
+    1. 获取 python 脚本: `curl -OL https://raw.githubusercontent.com/acidanthera/MacInfoPkg/master/macrecovery/macrecovery.py`
+    1. 下载最新的 macOS Recovery: `python2.7 macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000000000 download`
+    1. 会下载2个文件, 分别为 **BaseSystem.chunklist 和  BaseSystem.dmg** 
 
 3. 准备好一个容量1GB以上的U盘, 格式化成 **Fat32** 格式.
 4. 将OpenCore的EFI复制到U盘的 **根目录**
 5. 在U盘的 **根目录** 创建一个文件夹名字叫做: **`com.apple.recovery.boot`**
-6. 将 **RecoveryImage.dmg** 和 **RecoveryImage.chunklist** 复制到 **`com.apple.recovery.boot`** 里面
+6. 将 **BaseSystem.chunklist 和  BaseSystem.dmg**  复制到 **`com.apple.recovery.boot`** 里面
 7. 给启动文件命名
     1. 在文件夹 **`com.apple.recovery.boot`** 下面新建一个隐藏文件 **`.contentDetails`**
     1. 内容可以随便写, 比如 `Mojave Boot From Recovery`, 这个名字会出现在OpenCore的启动菜单上.
