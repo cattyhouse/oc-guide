@@ -36,8 +36,8 @@
         ├── BOOT
         ├── OC
     com.apple.recovery.boot
-        ├── RecoveryImage.chunklist
-        └── RecoveryImage.dmg
+        ├── BaseSystem.chunklist
+        └── BaseSystem.dmg
         └── .contentDetails
     ````
 9. 用U盘启动电脑选择 `Mojave Boot From Recovery`, 接下来就进入正常的安装界面
