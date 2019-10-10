@@ -12,8 +12,14 @@
 ## 步骤
 1. [配置好OpenCore的EFI](https://github.com/cattyhouse/oc-guide)
 2. 下载Recovery的DMG
-    1. 获取 python 脚本: `curl -OL https://raw.githubusercontent.com/acidanthera/MacInfoPkg/master/macrecovery/macrecovery.py`
-    1. 下载最新的 macOS Recovery: `python2.7 macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000000000 download`
+    1. 获取 python 脚本: 
+    ```bash
+    curl -OL https://raw.githubusercontent.com/acidanthera/MacInfoPkg/master/macrecovery/macrecovery.py
+    ```
+    1. 下载最新的 macOS Recovery: 
+    ```bash
+    python2.7 macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000000000 download
+    ```
     1. 会下载2个文件, 分别为 **BaseSystem.chunklist 和  BaseSystem.dmg** 
 
 3. 准备好一个容量1GB以上的U盘, 格式化成 **Fat32** 格式.
