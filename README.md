@@ -1,6 +1,8 @@
 
 # 更新记录
-- 本文适用于OpenCore 0.03 版本.
+- 最近更新: 2019.10.16 
+- 本文最开始写的时候是 OpenCore 0.03 版本, 到现在已经变化了不少.
+- 建议下载最新的 OpenCore 开始, 并留意我的注释
 - OpenCore 0.04 版本开始, 有比较大的变化:
     - AptioMemoryFix.efi 已经弃用, 功能移到了 OpenCore/config.plist/Booter 
     - FwRuntimeServices.efi 取代了 VariableRunEmutimeDxe.efi 和 EmuVariableRuntimeDxe.efi. 
@@ -8,6 +10,12 @@
 - OpenCore 0.5 版本开始公测
     - 尝试模拟白苹果行为, 比如按住CMD+R的同时开机, 进入恢复模式, 等等.
 
+# 资源:
+
+1. OpenCore 的官方下载地址: [OpenCore](https://github.com/acidanthera/OpenCorePkg)
+2. 与 OpenCore 配合使用的 kexts, efi 下载地址: [kexts](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/Kexts.md)
+3. OpenCore 的文档很细致, 下载后解压, 阅读 `Docs/Configuration.pdf` 
+4. 请勿使用来自 Clover 的 kexts, 他们并不兼容.
 
 # Wiki
 [wiki](https://github.com/cattyhouse/oc-guide/wiki) 会放一些OpenCore使用过程中的一些经验
@@ -50,10 +58,12 @@
 
 ## 缺点
 - 目前处于开发阶段, 更新会比较勤, 变动可能会比较大, 不过作者会做详细的变动记录,文档都及时更新
-- Clover的某些功能在OpenCore上面缺失, 不过目前的功能完全够用
+- ~~Clover的某些功能在OpenCore上面缺失, 不过目前的功能完全够用~~ 现在 OpenCore 比 Clover 强大很多
 
-# 制作macOS启动U盘
+# 制作 macOS 启动U盘
+
 > 以下方法来自苹果官网
+> 需要在 macOS 上操作, 如果你没有 macOS 请看下面 **最简单的安装macOS的方法**
 - [格式化U盘](https://support.apple.com/zh-cn/HT208496)
     - 至少8GB容量, 使用macOS的磁盘工具格式化
     - 选择`GUID分区表`以及`Mac OS 扩展格式`
@@ -84,7 +94,7 @@
 
 # 最简单的安装macOS的方法
 
-> 此为无需制作启动盘的安装方法
+> 此为无需制作启动盘的安装方法, 可以在任意操作系统下面操作.
 
 > 此方法源自OpenCore的文档, 需要先配置好OpenCore, 然后用它来启动Recovery的DMG.有兴趣的可以继续看:
 
@@ -93,19 +103,22 @@
 # OpenCore安装与配置
 
 ## OpenCore的文件结构
+
 > 首先, 我们看看一个已经配置好的OpenCore v0.03 的文件结构, 在EFI分区 (/Volumes/EFI/)下面, 有一个EFI文件夹, 内容如下
 
 ````
+括号里面为我的注释
+
 EFI
 │   ├── BOOT
 │   │   └── BOOTx64.efi
 │   └── OC
 │       ├── ACPI
-│       │   ├── SSDT-PLUG.aml
+│       │   ├── SSDT-PLUG.aml 
 │       ├── Drivers
-│       │   ├── ApfsDriverLoader.efi
-│       │   ├── AptioMemoryFix.efi
-│       │   ├── EmuVariableRuntimeDxe.efi
+│       │   ├── ApfsDriverLoader.efi 
+│       │   ├── AptioMemoryFix.efi (新版本 OpenCore 已经弃用此 efi)
+│       │   ├── EmuVariableRuntimeDxe.efi (新版本 OpenCore 已经用 FwRuntimeServices.efi 取代 )
 │       │   ├── HFSPlus.efi
 │       ├── Kexts
 │       │   ├── AppleALC.kext
@@ -131,15 +144,15 @@ EFI
         - [`SSDT-PLUG.aml`](EFI/OC/ACPI/SSDT-PLUG.aml) 开启硬件变频功能, 作用于CPU, iGPU, dGPU.
     - `Drivers` 存放文件系统驱动文件, 比如
         - [`ApfsDriverLoader.efi`](https://github.com/acidanthera/AppleSupportPkg/releases) 用于加载macOS内置的apfs.efi,读取APFS分区
-        - [`AptioMemoryFix.efi`](https://github.com/acidanthera/AptioFixPkg/releases) fix BIOS firmware, 让macOS可以正确启动
-        - [`EmuVariableRuntimeDxe.efi`](EFI/OC/Drivers/EmuVariableRuntimeDxe.efi) 大部分100/200/300系列的主板的nvram无法被macOS访问, 这个efi提供一个模拟的nvram, Justin从[UDK 2018](https://github.com/tianocore/edk2/tree/UDK2018)的源代码编译
+        - ~~[`AptioMemoryFix.efi`](https://github.com/acidanthera/AptioFixPkg/releases) fix BIOS firmware, 让macOS可以正确启动,~~ (新版本 OpenCore 已经弃用此 efi)
+        - ~~[`EmuVariableRuntimeDxe.efi`](EFI/OC/Drivers/EmuVariableRuntimeDxe.efi) 大部分100/200/300系列的主板的nvram无法被macOS访问, 这个efi提供一个模拟的nvram, Justin从[UDK 2018](https://github.com/tianocore/edk2/tree/UDK2018)的源代码编译,~~ (新版本 OpenCore 已经用 FwRuntimeServices.efi 取代 )
         - [`HFSPlus.efi`](EFI/OC/Drivers/HFSPlus.efi) 提供HFS+文件系统的支持, 读取macOS的安装U盘以及Recovery分区需要此efi
     - `Kexts` 存放各种设备和硬件的驱动或者补丁.
         - [`Lilu.kext`](https://github.com/acidanthera/Lilu/releases) 一个框架式的kext,自身单独使用没有作用, 是其他kext的依赖, 必须第一个被加载.
-        - [`AppleALC.kext`](https://github.com/acidanthera/AppleALC/releases) 让macOS可以正确识别主板上的RealTek集成声卡
+        - [`AppleALC.kext`](https://github.com/acidanthera/AppleALC/releases) 让macOS可以正确识别主板上的~~RealTek~~各种型号的集成声卡
         - [`VirtualSMC.kext`](https://github.com/acidanthera/VirtualSMC/releases) 模拟SMC, 不可或缺
         - [`WhateverGreen.kext`](https://github.com/acidanthera/WhateverGreen/releases) 解决iGPU, AMD/nVidia GPU的各种问题,
-        - 其他的几个kext, 根据需要使用, 比如[`IntelMausiEthernet.kext`](EFI/OC/Kexts/IntelMausiEthernet.kext.zip)(Justin根据[Mieze的源代码](https://github.com/Mieze/IntelMausiEthernet)编译)驱动板载intel网卡, [`SMCProcessor.kext SMCSuperIO.kext`](https://github.com/acidanthera/VirtualSMC/releases) 让macOS下的监控软件可以读取主板上的传感器信息温度,频率等
+        - 其他的几个kext, 根据需要使用, 比如[`IntelMausi.kext`](https://github.com/acidanthera/IntelMausi/releases), intel网卡驱动. [`SMCProcessor.kext SMCSuperIO.kext`](https://github.com/acidanthera/VirtualSMC/releases) 让macOS下的监控软件可以读取主板上的传感器信息温度,频率等
     - `Tools` 工具类efi,这些工具在OpenCore启动界面可以看到, 目前只有下面2个工具, **不可以放入Drivers文件夹**
         - [`CleanNvram.efi`](https://github.com/acidanthera/AptioFixPkg/releases) 清空nvram, 等效于启动到macOS恢复模式之后, 运行 `nvram -c`
         - [`Shell.efi`](https://github.com/acidanthera/OpenCoreShell/releases) 一个修改版的 `UEFI SHELL`, 可以做很多有趣的事情.
@@ -148,20 +161,8 @@ EFI
 
 > 所以, OC下面总共有4个文件夹, 2个主文件, 是不是非常简洁
 
-## 编译/下载 OpenCore
-- 编译并不是必须的, ~~作者有提供0.02的版本下载~~, 不过我目前用的是 0.03 版本, ~~需要编译~~
-- 编译非常简单, 不要怕, 作者什么都写好了
-- 编译不需要安装体积巨大的Xcode, 代码如下
-    ```sh
-    git clone https://github.com/acidanthera/OpenCorePkg 
-    cd OpenCorePkg
-    ./macbuild.tool
-    cp Binaries/RELEASE/OpenCore-*-RELEASE.zip ~/Desktop
-    ```
-- ~~我已经提供编译好的0.03版本~~
-- [原作者已经Release了0.03](https://github.com/acidanthera/OpenCorePkg/releases/download/v0.0.3/OpenCore-v0.0.3-RELEASE.zip), 建议使用.
-
 ## 搭积木 - 从零开始组建OpenCore
+
 > 相信看完 [OpenCore的文件结构](https://github.com/cattyhouse/oc-guide#opencore的文件结构), 心里已经有底了, 我们从0开始玩, 以下终端操作, 当然也可以在Finder里面鼠标操作, 结果是一样.
 
 - 用前面挂载EFI的方法, 我们进入macOS启动U盘的EFI分区
@@ -177,7 +178,7 @@ EFI
     mkdir BOOT
     mkdir -p OC/{ACPI,Drivers,Kexts,Tools}
     ```
-- 结构建立好了, 接下来将OpenCore-v0.0.3-RELEASE.zip解压,取出需要的文件放入对应的地方:
+- 结构建立好了, 接下来将 OpenCore 解压,取出需要的文件放入对应的地方:
     - BOOTx64.efi 放入 BOOT 文件夹
     - OpenCore.efi 放入 OC 文件夹
     - Docs 里面的 SampleFull.plist 命名为 config.plist, 放入 OC 文件夹
@@ -186,10 +187,23 @@ EFI
 
 ## 配置config.plist
 
-> config.plist 请使用PlistEdit Pro 或者 Xcode 进行可视化编辑
+> config.plist 请使用 PlistEdit Pro 或者 Xcode 进行可视化编辑
 
-> 关于配置, 作者有非常详细的英文文档, 解压OpenCore-v0.0.3-RELEASE.zip后,在`Docs/Configuration.pdf` 如果你有兴趣,可以从头到尾看一遍, 然后在`SampleFull.plist`的基础上做修改, 我已经配置了一个非常基本的[config.plist](EFI/OC/config.plist),你可以以我的这个为基础继续配置, 会大大提高成功概率和节约时间, 由于篇幅有限,我不打算每一个项目都过一遍, 只列出注意事项:
+> 关于配置, 作者有非常详细的英文文档, 解压 OpenCore 在`Docs/Configuration.pdf` 如果你有兴趣,可以从头到尾看一遍, 然后在`SampleFull.plist`的基础上做修改. 由于篇幅有限,我不打算每一个项目都过一遍, 只列出注意事项:
 
+1. 推荐值: 
+    1. AvoidRuntimeDefrag=YES , 必要项目 
+    1. DisableVariableWrite=YES, 300系列主板没有nvram的, 需要YES
+    1. EnableWriteUnprotector=YES, 必要项目
+    1. [SSDT-AWAC.dsl](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-AWAC.dsl), 300系列主板, 新版本BIOS必须要的SSDT, 需要编译为 aml 才可以使用. 具体google搜索如何把 dsl 编译为 aml. 加载方法见下面的说明.
+    1. Kernel/Add Lilu.kext必须永远在第一条
+    1. AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, AppleXcpmExtraMsrs=YES 如果你关不掉 CFG LOCK 的话
+    1. PanicNoKextDump=YES 有助于帮助分析问题
+    1. XhciPortLimit=YES, 取消USB限制 (10.15上可能不管用)
+    1. ConnectDrivers=YES, 让efi文件可以顺利加载
+    1. ConsoleControl=YES, 更好的控制opencore菜单
+    1. IgnoreTextInGraphics=YES, 修复一些小问题
+    1. ProvideConsoleGop=YES, 一般需要为YES, 否则看不到 apple logo
 1. EFI下面的每一个 kext, efi, aml, 都必须在config.plist里面有对应的条目, 且设置为`Enabled=YES`, 否则他们不会加载
     - `OC/ACPI/*.aml` 对应 `config.plist/ACPI/Add`
     - `OC/Drivers/*.efi` 对应 `config.plist/UEFI/Drivers`
@@ -205,37 +219,13 @@ EFI
     - 查看kext的内容, 可以右键点击kext, 然后选择`show package contents`
 1. 如果你是从Clover过来的, 使用了比如`rename EHC1 to EH01`, 这样的补丁, 可以将他们添加到config.plist/ACPI/Patch, 并设置Enabled=YES 让其生效. 注意Count=0 表示搜索整个DSDT表,直到搜不到为止, Skip=0 表示从头搜到尾. TableSignature=44534454 表示搜索DSDT表(因为DSDT的hex为44534454), TableSignature=0 表示搜索整个ACPI表, 包括SSDT表.
 1. config.plist里面有很多Quirks, 可以理解为作者预设好的补丁, 减轻使用者的负担, 每个Quirks的作用, 可以查阅`Docs/Configuration.pdf`
-1. DeviceProperties/Add 里面的参数, 可以设置比如iGPU的`AAPL,ig-platform-id`等等
+1. DeviceProperties/Add 里面的参数, 可以设置比如iGPU的`AAPL,ig-platform-id`等等, 具体阅读 [whatevergreen.kext github 页面的文档](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.cn.md)
 1. Kernel/Patch 是用来给macOS的内置kext打补丁的, 比如可以用来去掉USB限制, [每个版本的代码不一样, 详见这里](https://hackintosher.com/forums/thread/list-of-hackintosh-usb-port-limit-patches-10-14-updated.467/) , 当然Enabled=YES才会生效
     
-    - 作者预设了一个 XhciPortLimit 的 Quirks 补丁, 可以试试看, 或许能替代上面的方法, 我给的config.plist已经把这个设置为YES, 方便首次安装的朋友, 如果你使用了Patch的方法, 那么设置此项目为NO
-1. 我的 config.plist 已经设置 AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, 这是解决CFG LOCK问题的临时办法, 如果你的主板可以在BIOS里面关闭 CFG LOCK 或者你知道如何用Grub来关闭CFG LOCK, 可以设置这两个项目为NO.
-1. 启动参数在`NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82/boot-args` 这里加入或者修改. 
-1. 最后, 这个config.plist是没有序列号等等信息的, 只需要填 PlatformInfo/Generic 里面的5个项目, **不用理会** `DataHub, PlatformNVRAM, SMBIOS`, 可以使用[macserial](https://github.com/acidanthera/macserial/releases)生成或者用它查看你现有的.
-    - 如果你是Clover转换过来的, 运行
-        ```sh
-        macserial
-        ```
-        将获取的信息对号入住填入.
-
-    - 如果是全新安装OpenCore,那么 
-        - 先确认你要使用的机型 (SystemProductName), 比如iMac19,2, 比如iMacPro1,1, 然后运行
-            ```sh
-            macserial -m iMac19,2 -g
-            ```
-            会生成 SystemSerialNumber | MLB, 比如
-            ````
-            C02ZHGY6JWDW | C02940310GUKGQG1F
-            ````
-        - SystemUUID 可以直接用 macOS自带的 `/usr/bin/uuidgen` 生成
-        - ROM 其实就是一个MAC Address, 可以如下命令随机生成
-            ```sh
-            echo $FQDN|md5sum|sed 's/^\(..\)\(..\)\(..\)\(..\)\(..\).*$/02:\1:\2:\3:\4:\5/' 
-            ```
-            比如 `02:68:b3:29:da:98` 然后手动去掉冒号转换大写
-            ````
-            0268B329DA98
-            ````
+    - 作者预设了一个 XhciPortLimit 的 Quirks 补丁, 可以试试看, 或许能替代上面的方法,  如果你使用了Patch的方法, 那么设置此项目为NO
+1. AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, 这是解决CFG LOCK问题的临时办法, 如果你的主板可以在BIOS里面关闭 CFG LOCK 或者你知道如何用Grub来关闭CFG LOCK, 可以设置这两个项目为NO.
+1. 启动参数在`NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82/boot-args` 这里加入或者修改. 建议的启动参数为 -v alcid=1 , 前者提供debug输出, 后者注入声卡 id, 1 可以为其他数字,具体查看 AppleAlc.kext github 页面
+1. 最后, 这个config.plist是没有序列号等等信息的, 只需要填 PlatformInfo/Generic 里面的5个项目, **不用理会** `DataHub, PlatformNVRAM, SMBIOS`, 可以[在线生成](https://cloudclovereditor.altervista.org/cce/editor.php#smbios)
 1. ![#f03c15](https://placehold.it/15/f03c15/000000?text=+) `所有OpenCore使用的 *.efi 文件请不要从Clover拿过来用, 他们并不是很兼容, OpenCore所需的这些文件文中都给出了原作者链接. kexts文件也给出了最新的原作者链接.`
 1. 如果选择玩启动项目的数字就卡住, 开了debug显示 [Failed to find first BOOT_MODE_SAFE | BOOT_MODE_ASLR sequence](https://github.com/acidanthera/AptioFixPkg/blob/e33f044fb966045eb37cdf1b978dd67ef3d8d1eb/Platform/AptioMemoryFix/CustomSlide.c#L503) 有可能是MSR寄存器的问题, 可以尝试设置 **`IgnoreInvalidFlexRatio=YES`**
 
