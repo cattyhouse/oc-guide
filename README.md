@@ -1,6 +1,6 @@
 
 # 更新记录
-- 最近更新: 2019.10.16 
+- 最近更新: 2019.10.17 
 - 本文最开始写的时候是 OpenCore 0.03 版本, 到现在已经变化了不少.
 - 建议下载最新的 OpenCore 开始, 并留意我的注释
 - OpenCore 0.04 版本开始, 有比较大的变化:
@@ -154,7 +154,7 @@ EFI
         - [`WhateverGreen.kext`](https://github.com/acidanthera/WhateverGreen/releases) 解决iGPU, AMD/nVidia GPU的各种问题,
         - 其他的几个kext, 根据需要使用, 比如[`IntelMausi.kext`](https://github.com/acidanthera/IntelMausi/releases), intel网卡驱动. [`SMCProcessor.kext SMCSuperIO.kext`](https://github.com/acidanthera/VirtualSMC/releases) 让macOS下的监控软件可以读取主板上的传感器信息温度,频率等
     - `Tools` 工具类efi,这些工具在OpenCore启动界面可以看到, 目前只有下面2个工具, **不可以放入Drivers文件夹**
-        - [`CleanNvram.efi`](https://github.com/acidanthera/AptioFixPkg/releases) 清空nvram, 等效于启动到macOS恢复模式之后, 运行 `nvram -c`
+        - ~~[`CleanNvram.efi`](https://github.com/acidanthera/AptioFixPkg/releases) 清空nvram,~~ 新版本OpenCore已经用内置的选项 AllowNvramReset=YES 提供此功能, 等效于启动到macOS恢复模式之后, 运行 `nvram -c`
         - [`Shell.efi`](https://github.com/acidanthera/OpenCoreShell/releases) 一个修改版的 `UEFI SHELL`, 可以做很多有趣的事情.
     - `OpenCore.efi` OpenCore的主引导文件, 体积约200KB
     - `config.plist` OpenCore的主要配置文件, 可以使用PlistEdit Pro 或者 Xcode 可视化编辑.
