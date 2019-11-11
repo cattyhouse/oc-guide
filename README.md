@@ -204,6 +204,7 @@ EFI
     1. ConsoleControl=YES, 更好的控制opencore菜单
     1. IgnoreTextInGraphics=YES, 修复一些小问题
     1. ProvideConsoleGop=YES, 一般需要为YES, 否则看不到 apple logo
+    1. **RequireSignature=NO, RequireVault=NO**, 关闭OC的文件校验.
 1. EFI下面的每一个 kext, efi, aml, 都必须在config.plist里面有对应的条目, 且设置为`Enabled=YES`, 否则他们不会加载
     - `OC/ACPI/*.aml` 对应 `config.plist/ACPI/Add`
     - `OC/Drivers/*.efi` 对应 `config.plist/UEFI/Drivers`
