@@ -208,6 +208,7 @@ EFI
     1. **RequireSignature=NO, RequireVault=NO**, 关闭OC的文件校验.
     1. **ScanPolicy=11469571**, 允许扫描USB设备和HFS分区.
     1. **PollAppleHotKeys=NO**, 关闭菜单界面的快捷键功能, 这个功能目前兼容性不是很好.
+    1. **Automatic=YES**, 根据 **Generic** 里面的信息自动注入 SMBIOS 所需要的其他信息.
 1. EFI下面的每一个 kext, efi, aml, 都必须在config.plist里面有对应的条目, 且设置为`Enabled=YES`, 否则他们不会加载
     - `OC/ACPI/*.aml` 对应 `config.plist/ACPI/Add`
     - `OC/Drivers/*.efi` 对应 `config.plist/UEFI/Drivers`
@@ -228,6 +229,6 @@ EFI
     
     - 作者预设了一个 XhciPortLimit 的 Quirks 补丁, 可以试试看, 或许能替代上面的方法,  如果你使用了Patch的方法, 那么设置此项目为NO
 1. AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, 这是解决CFG LOCK问题的临时办法, 如果你的主板可以在BIOS里面关闭 CFG LOCK 或者你知道如何用Grub来关闭CFG LOCK, 可以设置这两个项目为NO.
-1. 最后, 这个config.plist是没有序列号等等信息的, 只需要填 PlatformInfo/Generic 里面的5个项目, **不用理会** `DataHub, PlatformNVRAM, SMBIOS`, 可以[在线生成](https://cloudclovereditor.altervista.org/cce/editor.php#smbios)
+1. 最后, 这个config.plist是没有序列号等等信息的, 只需要填 PlatformInfo/Generic 里面的5个项目, 可以 [在线生成](https://cloudclovereditor.altervista.org/cce/editor.php#smbios)
 1. 如果选择玩启动项目的数字就卡住, 开了debug显示 [Failed to find first BOOT_MODE_SAFE | BOOT_MODE_ASLR sequence](https://github.com/acidanthera/AptioFixPkg/blob/e33f044fb966045eb37cdf1b978dd67ef3d8d1eb/Platform/AptioMemoryFix/CustomSlide.c#L503) 有可能是MSR寄存器的问题, 可以尝试设置 **`IgnoreInvalidFlexRatio=YES`**
 
