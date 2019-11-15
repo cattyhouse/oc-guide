@@ -1,8 +1,8 @@
 # OpenCore从Recovery的DMG安装macOS各种版本
 ## 优点
 - 无需从App Store下载macOS安装文件
-- 对操作平台没有要求, 只要能运行php命令就可以, 所以可以在Linux/Windows/macOS 甚至在Linux服务器上操作.
-- 下载量非常小, Recovery只有400~500M
+- 对操作平台没有要求, 只要能运行 python 命令就可以, 所以可以在Linux/Windows/macOS 甚至在Linux服务器上操作.
+- 下载量非常小, Recovery只有400~500M, 所以 1GB 的 U盘就足以
 - 支持各种版本的macOS的安装,解决了旧版本macOS很难获取的问题
 
 ## 缺点
@@ -12,14 +12,23 @@
 ## 步骤
 1. [配置好OpenCore的EFI](https://github.com/cattyhouse/oc-guide)
 2. 下载Recovery的DMG
+
     1. 获取 python 脚本: 
+
     ```bash
     curl -OL https://raw.githubusercontent.com/acidanthera/MacInfoPkg/master/macrecovery/macrecovery.py
     ```
+
     1. 下载最新的 macOS Recovery: 
+
     ```bash
     python2.7 macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000000000 download
     ```
+
+    1. 下载其他 macOS 版本的 Recovery 的命令请参考 [recovery_urls.txt](https://github.com/acidanthera/MacInfoPkg/blob/master/macrecovery/recovery_urls.txt)
+
+    1. 更多的控制参数请参考 `./macrecovery.py --help`
+
     1. 会下载2个文件, 分别为 **BaseSystem.chunklist 和  BaseSystem.dmg** 
 
 3. 准备好一个容量1GB以上的U盘, 格式化成 **Fat32** 格式.
