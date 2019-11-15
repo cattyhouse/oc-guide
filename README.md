@@ -24,8 +24,8 @@
 - ***通篇没有废话, 请务必认真读每一个字*** 
 - 尽可能用最简单的语言描述OpenCore安装和启动黑苹果.
 - 不提供最终的启动文件,而是提供方法.有了正确的方法, 就可以完全掌控自己的电脑.
-- 黑苹果用到的所有工具,kexts以及efi文件的链接都指向原作者,可以及时的了解原作者的更新内容, 同时确保你看到这篇文章的时候, 使用的是最新.
-- 建议通读本文并理解后,再开始你自己黑苹果之旅.
+- 黑苹果用到的所有工具,kexts以及efi文件的链接都指向原作者,可以及时的了解原作者的更新内容, 同时确保看到这篇文章的时候, 使用的是最新.
+- 建议通读本文并理解后,再开始黑苹果之旅.
 
 # 黑苹果与白苹果的主要区别
 > 2006年乔布斯将苹果电脑使用的处理器从IBM转向Intel之后, 在普通PC上安装macOS的大门才算正式开启, 随着硬件的发展, PC与苹果电脑的差异越来越小, 黑苹果越来越接近苹果电脑, 目前的区别主要在于EFI以及ACPI.
@@ -54,7 +54,7 @@
 - 全新的Bootloader, 没有历史包袱
 - 稳定, 非常稳定
 - 安全, 可以选择对自身做签名,防止篡改
-- 配置文件有严格的一一对应的要求, 所以你知道自己在干什么.
+- 配置文件有严格的一一对应的要求, 知道自己在干什么.
 
 ## 缺点
 - 目前处于开发阶段, 更新会比较勤, 变动可能会比较大, 不过作者会做详细的变动记录,文档都及时更新
@@ -63,9 +63,9 @@
 # 制作 macOS 启动U盘
 
 > 以下方法来自苹果官网
-> 需要在 macOS 上操作, 如果你没有 macOS 请看下面 **最简单的安装macOS的方法**
+> 需要在 macOS 上操作, 如果没有 macOS 请看下面 **最简单的安装macOS的方法**
 - 从 App Store 下载 macOS
-    - 如果你下载失败, 可以考虑使用这个[gibMacOS](https://github.com/corpnewt/gibMacOS) 下载各种版本的 macOS, 可以在任意操作系统下面操作.
+    - 如果下载失败, 可以考虑使用这个[gibMacOS](https://github.com/corpnewt/gibMacOS) 下载各种版本的 macOS, 可以在任意操作系统下面操作.
 - [格式化U盘](https://support.apple.com/zh-cn/HT208496)
     - 建议16GB容量, 使用macOS的磁盘工具格式化
     - 选择`GUID分区表`以及`Mac OS 扩展格式`
@@ -110,7 +110,7 @@ EFI
 │   │   └── BOOTx64.efi
 │   └── OC
 │       ├── ACPI
-│       │   ├── SSDT-PLUG.aml (注意看里面的 CPU 名称, 根据你 DSDT 里面的CPU名称做相应的修改,比如 PR.PR00, SB.PR00, PR.CPU0 等等)
+│       │   ├── SSDT-PLUG.aml (注意看里面的 CPU 名称, 根据 DSDT 里面的 CPU 名称做相应的修改, 比如 PR.PR00, SB.PR00, PR.CPU0 等等)
 │       ├── Drivers
 │       │   ├── ApfsDriverLoader.efi 
 │       │   ├── AptioMemoryFix.efi (新版本 OpenCore 已经弃用此 efi, 通过 config.plist/Booter 里面的选项提供此功能)
@@ -188,7 +188,7 @@ EFI
 
 > config.plist 请使用 PlistEdit Pro 或者 Xcode 进行可视化编辑
 
-> 关于配置, 作者有非常详细的英文文档, 解压 OpenCore 在`Docs/Configuration.pdf` 如果你有兴趣,可以从头到尾看一遍, 然后在`Sample.plist`的基础上做修改. 由于篇幅有限,我不打算每一个项目都过一遍, 只列出注意事项:
+> 关于配置, 作者有非常详细的英文文档, 解压 OpenCore 在`Docs/Configuration.pdf` 如果有兴趣,可以从头到尾看一遍, 然后在`Sample.plist`的基础上做修改. 由于篇幅有限,我不打算每一个项目都过一遍, 只列出注意事项:
 
 1. 推荐值: 
     1. 重要的事情说三遍: **用U盘做测试 用U盘做测试 用U盘做测试** 
@@ -197,8 +197,8 @@ EFI
     1. **EnableWriteUnprotector=YES**, 必要项目
     1. **[SSDT-AWAC.dsl](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-AWAC.dsl)**, 300系列主板, 新版本BIOS必须要的SSDT, 需要编译为 aml 才可以使用. 具体google搜索如何把 dsl 编译为 aml. 加载方法见下面的说明.
     1. **Kernel/Add Lilu.kext** 必须永远在第一条
-    1. **AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, AppleXcpmExtraMsrs=YES** 如果你的主板有 CFG LOCK 且无法从 BIOS 里面关掉的话
-    1. **PanicNoKextDump=YES** 启动过程中如果崩溃了, 禁止 Kext Dump, 这样你可以看到具体引起崩溃的原因 (backtrace)
+    1. **AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, AppleXcpmExtraMsrs=YES** 如果主板有 CFG LOCK 且无法从 BIOS 里面关掉的话,如果可以 BIOS 关掉 CFG LOCK, 这三个选项都设置为 NO
+    1. **PanicNoKextDump=YES** 启动过程中如果崩溃了, 禁止 Kext Dump, 这样可以看到具体引起崩溃的原因 (backtrace)
     1. 启动参数在 **`NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82/boot-args`** 这里加入或者修改. 建议的启动参数为 `-v alcid=1 keepsyms=1 debug=0x100` , 其中: `-v` 跑码, `alcid=1` 声卡id注入, `keepsyms=1 debug=0x100` 系统崩溃不自动重启, 方便查看崩溃原因.
     1. **XhciPortLimit=YES**, 取消 macOS 15个 USB 端口的限制
     1. **ConnectDrivers=YES**, 让 *.efi 文件可以顺利加载
@@ -217,12 +217,12 @@ EFI
     - 附图举例, `config.plist/UEFI/Drivers/` 下面配置了5个条目, 要保证 `OC/Drivers/` 下面有这5个efi, 否则启动会提示出错. 同样 `OC/Drivers/` 下面如果有efi没有加入config.plist里面,是不会被加载的. 所以我上面提到的这4个一一对应的地方, 要反复核对, 确保没有疏忽. ![1to1](pics/1to1.png)
 
 1. 如果config.plist里面有条目, 但是OC文件夹下面的子文件夹没有对应的文件, 启动会报错, 所以两者必须是一一对应.条目被设置为`Enabled=NO`,除外.
-1. 如果你想新增一个条目, 那么可以右键点击已有条目,选择 Duplicate, 然后做相应的修改
+1. 如果想新增一个条目, 那么可以右键点击已有条目,选择 Duplicate, 然后做相应的修改
 1. 新增kext的注意事项
     - 以附图为例![附图](pics/addkext.png)
     - 注意kext里面是否有可执行文件, 如果有, 需要按图填入 `ExecutablePath` 如果没有,这个地方留空.
     - 查看kext的内容, 可以右键点击kext, 然后选择`show package contents`
-1. 如果你是从Clover过来的, 使用了比如`rename EHC1 to EH01`, 这样的补丁, 可以将他们添加到config.plist/ACPI/Patch, 并设置Enabled=YES 让其生效. 注意Count=0 表示搜索整个DSDT表,直到搜不到为止, Skip=0 表示从头搜到尾. TableSignature=44534454 表示搜索DSDT表(因为DSDT的hex为44534454), TableSignature=0 表示搜索整个ACPI表, 包括SSDT表.
+1. 如果是从Clover过来的, 使用了比如`rename EHC1 to EH01`, 这样的补丁, 可以将他们添加到config.plist/ACPI/Patch, 并设置Enabled=YES 让其生效. 注意Count=0 表示搜索整个DSDT表,直到搜不到为止, Skip=0 表示从头搜到尾. TableSignature=44534454 表示搜索DSDT表(因为DSDT的hex为44534454), TableSignature=0 表示搜索整个ACPI表, 包括SSDT表.
 1. config.plist里面有很多Quirks, 可以理解为作者预设好的补丁, 减轻使用者的负担, 每个Quirks的作用, 可以查阅`Docs/Configuration.pdf`
 1. DeviceProperties/Add 里面的参数, 可以设置比如iGPU的`AAPL,ig-platform-id`等等, 具体阅读 [whatevergreen.kext github 页面的文档](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.cn.md)
 1. 最后, 这个config.plist是没有序列号等等信息的, 只需要填 PlatformInfo/Generic 里面的5个项目, 可以 [在线生成](https://cloudclovereditor.altervista.org/cce/editor.php#smbios)
