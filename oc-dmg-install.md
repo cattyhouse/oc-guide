@@ -2,7 +2,7 @@
 ## 优点
 - 无需从App Store下载macOS安装文件
 - 对操作平台没有要求, 只要能运行 python 命令就可以, 所以可以在Linux/Windows/macOS 甚至在Linux服务器上操作.
-- 下载量非常小, Recovery只有400~500M, 所以 1GB 的 U盘就足以
+- 下载量非常小, Recovery只有400~500M, 所以 1GB 的 U盘
 - 支持各种版本的macOS的安装,解决了旧版本macOS很难获取的问题
 
 ## 缺点
@@ -15,15 +15,15 @@
 
     1. 获取 python 脚本: 
 
-    ```bash
-    curl -OL https://raw.githubusercontent.com/acidanthera/MacInfoPkg/master/macrecovery/macrecovery.py
-    ```
+        ```bash
+        curl -OL https://raw.githubusercontent.com/acidanthera/MacInfoPkg/master/macrecovery/macrecovery.py
+        ```
 
     1. 下载最新的 macOS Recovery: 
 
-    ```bash
-    python2.7 macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000000000 download
-    ```
+        ```bash
+        python2.7 macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000000000 download
+        ```
 
     1. 下载其他 macOS 版本的 Recovery 的命令请参考 [recovery_urls.txt](https://github.com/acidanthera/MacInfoPkg/blob/master/macrecovery/recovery_urls.txt)
 
