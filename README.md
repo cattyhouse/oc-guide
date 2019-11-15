@@ -195,7 +195,7 @@ EFI
     1. **AvoidRuntimeDefrag=YES** , 必要项目 
     1. **DisableVariableWrite=YES**, 100/200/300系列主板没有nvram的, 需要YES, 如果设置为 NO, 那么表现就是睡眠会自动重启. 通常 **z370** 主板不需要开启此选项.
     1. **EnableWriteUnprotector=YES**, 必要项目
-    1. **[SSDT-AWAC.dsl](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-AWAC.dsl)**, 300系列主板, 新版本BIOS必须要的SSDT, 需要编译为 aml 才可以使用. 具体google搜索如何把 dsl 编译为 aml. 加载方法见下面的说明.
+    1. **[SSDT-AWAC.dsl](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-AWAC.dsl)**, 300系列主板, 新版本BIOS必须要的SSDT, 需要编译为 aml 才可以使用. 具体google搜索如何把 dsl 编译为 aml. 加载方法见下面的说明. 如果想了解它的作用, 可以看这里的[原理分析](https://github.com/cattyhouse/oc-guide/wiki/我的一些黑苹果笔记#解决华擎主板新bios无法启动macos)
     1. **Kernel/Add Lilu.kext** 必须永远在第一条
     1. **AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, AppleXcpmExtraMsrs=YES** 如果主板有 CFG LOCK 且无法从 BIOS 里面关掉的话,如果可以 BIOS 关掉 CFG LOCK, 这三个选项都设置为 NO
     1. **PanicNoKextDump=YES** 启动过程中如果崩溃了, 禁止 Kext Dump, 这样可以看到具体引起崩溃的原因 (backtrace)
