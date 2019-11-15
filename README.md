@@ -60,41 +60,16 @@
 - 目前处于开发阶段, 更新会比较勤, 变动可能会比较大, 不过作者会做详细的变动记录,文档都及时更新
 - ~~Clover的某些功能在OpenCore上面缺失, 不过目前的功能完全够用~~ 现在 OpenCore 比 Clover 强大很多
 
-# 制作 macOS 启动U盘
 
-> 以下方法来自苹果官网
-> 需要在 macOS 上操作, 如果没有 macOS 请看下面 **最简单的安装macOS的方法**
-- 从 App Store 下载 macOS
-    - 如果下载失败, 可以考虑使用这个[gibMacOS](https://github.com/corpnewt/gibMacOS) 下载各种版本的 macOS, 可以在任意操作系统下面操作.
-- [格式化U盘](https://support.apple.com/zh-cn/HT208496)
-    - 建议16GB容量, 使用macOS的磁盘工具格式化
-    - 选择`GUID分区表`以及`Mac OS 扩展格式`
-    - 启动盘U盘一定要使用`Mac OS 扩展格式`, 否则后面的步骤无法操作
-- [创建启动盘](https://support.apple.com/zh-cn/HT201372)
+# 从 Recovery DMG 安装 macOS
 
-# 挂载U盘的EFI分区
-> 挂载EFI分区,供安装OpenCore使用
-- macOS下的方法, 打开终端.app, 执行以下命令
-    - 确定EFI所在的位置
-        ```sh
-        diskutil list | grep -A4 external
-        ```
-    - 输出结果举例, EFI在 `disk4s1`
-        ````
-          1:   EFI EFI   209.7 MB   disk4s1
-        ````
-    - 挂载EFI分区, 完成后桌面会出现一个名为EFI空分区, 所有的Opencore的操作都在这个EFI分区的EFI文件夹下面进行
-        ```sh
-        sudo diskutil mount /dev/disk4s1
-        ```
+- 无需从 apple store 下载巨大的安装文件, 无需写盘.
 
-# 最简单的安装macOS的方法
+- 此方法源自 OpenCore 的文档, 用 python 脚本从苹果服务器下载 BaseSystem.dmg, OpenCore 可以自动识别这个文件, 所以可以在任意操作系统下面操作.
 
-> 此为无需制作启动盘的安装方法, 可以在任意操作系统下面操作.
+- 制作 OpenCore EFI 也可以任意操作系统下面操作, 于是现在安装 macOS 不需要事先拥有 macOS 系统了. 
 
-> 此方法源自OpenCore的文档, 需要先配置好OpenCore, 然后用它来启动Recovery的DMG.有兴趣的可以继续看:
-
-> [OpenCore从Recovery的DMG安装macOS各种版本](oc-dmg-install.md)
+-  [OpenCore从Recovery的DMG安装macOS各种版本](oc-dmg-install.md)
 
 # OpenCore安装与配置
 
@@ -206,7 +181,6 @@ EFI
     1. **IgnoreTextInGraphics=YES**, 修复一些图形界面显示部分文字消息的问题
     1. **ProvideConsoleGop=YES**, 一般需要为YES, 否则看不到 apple logo
     1. **RequireSignature=NO, RequireVault=NO**, 关闭OC的文件校验.
-    1. **ScanPolicy=11469571**, 允许扫描USB设备和HFS分区.
     1. **PollAppleHotKeys=NO**, 关闭菜单界面的快捷键功能, 这个功能目前兼容性不是很好.
     1. **Automatic=YES**, 根据 **Generic** 里面的信息自动注入 SMBIOS 所需要的其他信息.
 1. EFI下面的每一个 kext, efi, aml, 都必须在config.plist里面有对应的条目, 且设置为`Enabled=YES`, 否则他们不会加载
