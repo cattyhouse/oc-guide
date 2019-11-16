@@ -199,6 +199,10 @@ EFI
 1. 如果是从Clover过来的, 使用了比如`rename EHC1 to EH01`, 这样的补丁, 可以将他们添加到config.plist/ACPI/Patch, 并设置Enabled=YES 让其生效. 注意Count=0 表示搜索整个DSDT表,直到搜不到为止, Skip=0 表示从头搜到尾. TableSignature=44534454 表示搜索DSDT表(因为DSDT的hex为44534454), TableSignature=0 表示搜索整个ACPI表, 包括SSDT表.
 1. config.plist里面有很多Quirks, 可以理解为作者预设好的补丁, 减轻使用者的负担, 每个Quirks的作用, 可以查阅`Docs/Configuration.pdf`
 1. DeviceProperties/Add 里面的参数, 可以设置比如iGPU的`AAPL,ig-platform-id`等等, 具体阅读 [whatevergreen.kext github 页面的文档](https://github.com/acidanthera/WhateverGreen/blob/master/Manual/FAQ.IntelHD.cn.md)
-1. 最后, 这个config.plist是没有序列号等等信息的, 只需要填 PlatformInfo/Generic 里面的5个项目, 可以 [在线生成](https://cloudclovereditor.altervista.org/cce/editor.php#smbios)
+1. 最后, 这个config.plist是没有序列号等等信息的, 只需要填 PlatformInfo/Generic 里面的5个项目, 可以 [通过macserial生成](https://github.com/acidanthera/MacInfoPkg/releases)
+    1. macserial --help 获取帮助
+    1. macserial -m iMacPro1,1 示例生成iMacPro1,1的 `SystemSerialNumber` 和 `MLB`
+    1. 找个在线生成 UUID 的地方, 可以生成 `SystemUUID`
+    1. 找个在线生成 MAC Address 的地方, 生成一个网卡地址, 去掉 `:` 或者 `-`, 转换为大写, 填入 `ROM`
 1. 如果选择玩启动项目的数字就卡住, 开了debug显示 [Failed to find first BOOT_MODE_SAFE | BOOT_MODE_ASLR sequence](https://github.com/acidanthera/AptioFixPkg/blob/e33f044fb966045eb37cdf1b978dd67ef3d8d1eb/Platform/AptioMemoryFix/CustomSlide.c#L503) 有可能是MSR寄存器的问题, 可以尝试设置 **`IgnoreInvalidFlexRatio=YES`**
 
