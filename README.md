@@ -40,7 +40,7 @@
     - OpenCore作为一个booloader,除了负责启动macOS之外的另一个主要功能就是修改PC的ACPI表兼容macOS
 
 > 所以接下来的内容就非常明了:
-- 制作一个macOS启动U盘, 直接采用苹果官方提供的方法.
+- 制作一个macOS启动U盘
 - 生成一个OpenCore的EFI放在U盘, 将macOS安装到PC并启动
 - 复制U盘上的EFI到安装好macOS的SSD上, 从SSD启动macOS, 脱离U盘.
 
@@ -139,9 +139,9 @@ EFI
 
 > 相信看完 [OpenCore的文件结构](https://github.com/cattyhouse/oc-guide#opencore的文件结构), 心里已经有底了, 我们从0开始玩, 以下终端操作, 当然也可以在Finder里面鼠标操作, 结果是一样.
 
-- 用前面挂载EFI的方法, 我们进入 macOS 启动U盘的 EFI 分区
+- 我们在任意地方开始操作, 比如桌面
     ```sh
-    cd /Volumes/EFI/
+    cd ~/Desktop
     ```
 - 然后建立一个叫做 EFI 的文件夹
     ```sh
@@ -157,7 +157,7 @@ EFI
     - OpenCore.efi 放入 OC 文件夹
     - Docs 里面的 Sample.plist 命名为 config.plist, 放入 OC 文件夹
     - 将 `OpenCore的文件结构` 中提到的 *.aml, *.kext, *.efi 按自己的需求需复制到对应的 `ACPI , Drivers , Kexts , Tools` 文件夹.
-- 积木搭建完毕
+- 积木搭建完毕, 这个 EFI 文件夹, 复制到 FAT32 格式的U盘的根目录, 就可以在BIOS选择U盘引导它, 当然要配置下, 配置见下文.
 
 ## 配置config.plist
 
