@@ -18,6 +18,8 @@
 > 总结: 如果有 AMD 独立显卡, 直接使用 iMacPro1,1, 关闭 iGPU, 一了百了.
 - 原因: WhateverGreen 屏蔽了 Intel GuC 的加载.
 - 解决方法:
+    > 如果用 iMacPro1,1 就没必要采用下面的操作, 因为 iGPU 已经关闭不起作用.
+
     1. Disable 掉 WhateverGreen.kext 的加载
     1. 加入 AGDP patch, 在 **config.plist/Kernel/Patch**
 
