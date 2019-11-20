@@ -1,6 +1,6 @@
 
 # 更新记录
-- 最近更新: 2019.11.15 
+- 最近更新: 2019.11.20
 - 本文最开始写的时候是 OpenCore 0.03 版本, 到现在已经变化了不少.
 - 建议下载最新的 OpenCore 开始, 并留意我的注释
 - OpenCore 0.04 版本开始, 有比较大的变化:
@@ -9,6 +9,59 @@
     - 但总体结构上保持一致.
 - OpenCore 0.5 版本开始公测
     - 尝试模拟白苹果行为, 比如按住CMD+R的同时开机, 进入恢复模式, 等等.
+
+# 已知问题
+
+## iGPU 在解码编码过程中频率不超过 0.5 Ghz. 相关 [issue](https://github.com/acidanthera/bugtracker/issues/546)
+>  针对 iMac19,2 和 iMac19,1 的 SMBIOS. 
+
+> 总结: 如果有 AMD 独立显卡, 直接使用 iMacPro1,1, 关闭 iGPU, 一了百了.
+- 原因: WhateverGreen 屏蔽了 Intel GuC 的加载.
+- 解决方法:
+    1. Disable 掉 WhateverGreen.kext 的加载
+    1. 加入 AGDP patch, 在 **config.plist/Kernel/Patch**
+
+        ````
+        Identifier: com.apple.driver.AppleGraphicsDevicePolicy
+        Find: 62 6f 61 72 64 2d 69 64
+        Replace: 62 6f 61 72 64 2d 69 78
+        Comment: Ranem board-id to board-ix
+        Count: 1
+        ````
+    1. ACPI 设备重命名, 在 **config.plist/ACPI/Patch**
+        - GFX0 to IGPU, 因为 BIOS 的集成显卡叫做 GFX0, macOS 需要它叫做 iGPU
+            ````
+            Comment: Rename GFX0 to IGPU
+            Find: 47 46 58 30
+            Replace: 49 47 50 55
+            Count: 0
+            TableSignature: 0
+            ````
+        - PEGP to GFX0, 因为BIOS的独立显卡叫做PEGP, macOS需要它叫做GFX0
+            ````
+            Comment: Rename PEGP to GFX0
+            Find: 50 45 47 50
+            Replace: 47 46 58 30
+            Count: 0
+            TableSignature: 0
+            ````
+## iGPU 无法播放 Apple TV 里面的电视剧和电影, 相关 [issue1](https://github.com/acidanthera/bugtracker/issues/519), [issue2](https://github.com/acidanthera/bugtracker/issues/582)
+>  针对 iMac19,2 和 iMac19,1 的 SMBIOS. 
+
+> 总结: 如果有 AMD 独立显卡, 直接使用 iMacPro1,1, 关闭 iGPU, 一了百了.
+- 原因: 因为没有 Apple Firmware, 黑苹果上的 iGPU 无法硬件解码 Apple TV 的 DRM 内容
+- 解决方法: 
+    - 方法一: BIOS 关闭 iGPU, SMBIOS 采用 iMacPro1,1
+    - 方法二: 无需关闭 iGPU, SMBIOS 依旧采用可爱的 iMac19,2 iMac19,1 加入启动参数 **shikigva=32 shiki-id=Mac-7BA5B2D9E42DDD94**, 这个目的就是让 AppleGVA 用 iMacPro1,1 的方式处理硬件解码和编码,也就是用 AMD的显卡, 但与此同时, iGPU 变成彻底无用了. 因为这个方法是对所有 App 生效
+    - 方法三: 等待 WhateverGreen 更新, 计划是将 Apple TV 单独列出来, 让它使用 AMD 的 GPU 去解码 DRM 视频, 这样就不会影响其他 App 使用 iGPU 的解码编码功能.
+## 开启网络唤醒后, Wi-Fi ping 延迟在睡眠唤醒后非常高
+- 原因: 未知
+- 解决方法: 关闭网络唤醒
+
+## 唤醒后蓝牙硬件找不到
+- 原因: 转接板设计问题
+- 解决方法: 更换转接板. 
+
 
 # 资源:
 
