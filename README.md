@@ -55,7 +55,7 @@
 - 解决方法: 
     - 方法一: BIOS 关闭 iGPU, SMBIOS 采用 iMacPro1,1
     - 方法二: 无需关闭 iGPU, SMBIOS 依旧采用可爱的 iMac19,2 iMac19,1 加入启动参数 **shikigva=32 shiki-id=Mac-7BA5B2D9E42DDD94**, 这个目的就是让 AppleGVA 用 iMacPro1,1 的方式处理硬件解码和编码,也就是用 AMD的显卡, 但与此同时, iGPU 变成彻底无用了. 因为这个方法是对所有 App 生效
-    - 方法三: 等待 WhateverGreen 更新, 计划是将 Apple TV 单独列出来, 让它使用 AMD 的 GPU 去解码 DRM 视频, 这样就不会影响其他 App 使用 iGPU 的解码编码功能.
+    - 方法三: 等待 WhateverGreen 更新, 计划是将 Apple TV 单独列出来, 让它使用 AMD 的 GPU 去解码 DRM 视频, 这样就不会影响其他 App 使用 iGPU 的解码编码功能. **Update: 1.3.5 已经更新, 通过 shikigva=16 参数让部分 app 走 AMD GPU 解码.**
 ## 开启网络唤醒后, Wi-Fi ping 延迟在睡眠唤醒后非常高
 - 原因: 未知
 - 解决方法: 关闭网络唤醒
@@ -238,6 +238,7 @@ EFI
     1. **RequireSignature=NO, RequireVault=NO**, 关闭OC的文件校验.
     1. **PollAppleHotKeys=NO**, 关闭菜单界面的快捷键功能, 这个功能目前兼容性不是很好.
     1. **Automatic=YES**, 根据 **Generic** 里面的信息自动注入 SMBIOS 所需要的其他信息.
+    1. **shikigva=16** , 启动参数用 AMD GPU 解码 Apple Tv
 1. EFI下面的每一个 kext, efi, aml, 都必须在config.plist里面有对应的条目, 且设置为`Enabled=YES`, 否则他们不会加载
     - `OC/ACPI/*.aml` 对应 `config.plist/ACPI/Add`
     - `OC/Drivers/*.efi` 对应 `config.plist/UEFI/Drivers`
