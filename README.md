@@ -1,6 +1,6 @@
 
 # 更新记录
-- 最近更新: 2019.11.20
+- 最近更新: 2019.12.17
 - 本文最开始写的时候是 OpenCore 0.03 版本, 到现在已经变化了不少.
 - 建议下载最新的 OpenCore 开始, 并留意我的注释
 - OpenCore 0.04 版本开始, 有比较大的变化:
@@ -152,12 +152,12 @@ EFI
 
 ```
 
-> 简单说明如下
+> 简单说明如下, 蓝色高亮的是下载链接, 都是指向原作者的最新版.
 
 - `EFI/BOOT/BOOTx64.efi` 电脑启动的时候支持UEFI的主板会去读取这个文件
 - `EFI/OC` OpenCore 存放目录
     - `ACPI` 存放自定义的ssdt aml文件, 比如
-        - [`SSDT-PLUG.aml`](EFI/OC/ACPI/SSDT-PLUG.aml) 开启硬件变频功能, 作用于CPU, iGPU, dGPU.
+        - [`SSDT-PLUG.aml`](EFI/OC/ACPI/SSDT-PLUG.aml) 开启硬件变频功能, 作用于CPU, iGPU, dGPU. 注意此文件里面的 CPU 的位置和名称需要与 DSDT.aml 里面的一致, 可能的位置: _SB _PR 等, 可能的名称: PR00 CPU0 等, 不同的主板各不相同.
         - [`SSDT-AWAC.dsl`](https://github.com/acidanthera/OpenCorePkg/tree/master/Docs/AcpiSamples) 300系列的主板用最近更新的 BIOS 后, RTC 失效, 这个 SSDT 作用是启用 RTC, 需要自行编译为 aml
         - [`SSDT-EC-USBX.dsl`](https://github.com/acidanthera/OpenCorePkg/tree/master/Docs/AcpiSamples) Fake EC 和 USBX, 给 macOS 提供一个虚假的EC设备, 同时提供 USB 大电流支持, 需要自行编译为 aml
     - `Drivers` 存放文件系统驱动文件, 比如
@@ -170,10 +170,11 @@ EFI
         - [`VirtualSMC.kext`](https://github.com/acidanthera/VirtualSMC/releases) 模拟SMC,  **必要文件**
         - [`WhateverGreen.kext`](https://github.com/acidanthera/WhateverGreen/releases) 解决集成/独立显卡的各种问题  **必要文件**
         - 其他的几个kext, 根据需要使用, 比如: 
-        - [`IntelMausi.kext`](https://github.com/acidanthera/IntelMausi/releases), intel网卡驱动. 
+        - [`IntelMausi.kext`](https://github.com/acidanthera/IntelMausi/releases), Intel 有线网卡驱动. 
+        - [`RealtekR1000SL.kext`](https://github.com/SergeySlice/RealtekLANv3/releases), Realtek 有线网卡驱动
         - [`SMCProcessor.kext SMCSuperIO.kext`](https://github.com/acidanthera/VirtualSMC/releases) 让macOS下的监控软件可以读取主板上的传感器信息温度,频率等
-    - `Tools` 工具类efi, 这些工具在OpenCore启动界面可以看到, 目前只有下面2个工具, **不可以放入Drivers文件夹**
-        - ~~[`CleanNvram.efi`](https://github.com/acidanthera/AptioFixPkg/releases) 清空nvram,~~ 新版本OpenCore已经用内置的选项 AllowNvramReset=YES 提供此功能, 等效于启动到macOS恢复模式之后, 运行 `nvram -c`
+    - `Tools` 工具类efi, 这些工具在 OpenCore 启动界面可以看到, 目前只有下面2个工具, **不可以放入Drivers文件夹**
+        - ~~`CleanNvram.efi`~~ 作用为清空nvram, 新版本 OpenCore 已经用内置的选项 AllowNvramReset=YES 取代这个 efi, 等效于启动到macOS恢复模式之后, 运行 `nvram -c`
         - [`Shell.efi`](https://github.com/acidanthera/OpenCoreShell/releases) 一个修改版的 `UEFI SHELL`, 可以做很多有趣的事情.
         - [`VerifyMsrE2`](https://github.com/acidanthera/AppleSupportPkg/releases), 检查主板是否有 CFG LOCK
     - `OpenCore.efi` OpenCore的主引导文件, 体积约200KB
@@ -183,7 +184,7 @@ EFI
 
 ## 搭积木 - 从零开始组建OpenCore
 
-> 相信看完 [OpenCore的文件结构](https://github.com/cattyhouse/oc-guide#opencore的文件结构), 心里已经有底了, 我们从0开始玩, 以下终端操作, 当然也可以在Finder里面鼠标操作, 结果是一样.
+> 相信看完 [OpenCore的文件结构](https://github.com/cattyhouse/oc-guide#opencore的文件结构), 心里已经有底了, 我们从 0 开始玩, 以下终端操作, 当然也可以在 Finder 里面鼠标操作, 结果是一样.
 
 - 我们在任意地方开始操作, 比如桌面
     ```sh
@@ -208,30 +209,32 @@ EFI
 
 ## 配置config.plist
 
-- config.plist 请使用 PlistEdit Pro 或者 Xcode 进行可视化编辑
-- 无论首次安装或者更新, 请务必以你下载的 OpenCore 里面的 sample.plist 为基础做设置, 对于更新来说, 请自行比较新旧版的 sample.plist 的变化, 然后适配到你的 config.plist 里面去
+- config.plist 请使用 PlistEdit Pro 或者 Xcode 进行可视化编辑, 避免出错.
+- 无论首次安装或者更新, 请务必以你下载的 OpenCore 里面的 sample.plist 为基础做设置. 对于更新来说, 请自行比较新旧版的 sample.plist 的变化, 然后适配到你的 config.plist 里面去
+- 请勿删除 sample.plist 里面的条目, 很可能会破坏结构, 大部分配置都可以设置 YES/NO (PlistEdit Pro) 或者 true/false (Xcode) 来 启用/禁用
 - 请勿使用来自 Clover 的 kexts, 他们并不兼容.
-- 关于配置, 作者有非常详细的英文文档, 解压 OpenCore 在 `Docs/Configuration.pdf` 如果有兴趣,可以从头到尾看一遍, 然后在 `Sample.plist` 的基础上做修改. 由于篇幅有限,我不打算每一个项目都过一遍, 只列出注意事项:
+- 关于配置, 作者有非常详细的英文文档, 解压 OpenCore 在 `Docs/Configuration.pdf` 如果有兴趣,可以从头到尾看一遍, 由于篇幅有限,我不打算每一个项目都过一遍, 只列出注意事项:
 
 1. 推荐值: 
-    1. 重要的事情说三遍: **用U盘做测试 用U盘做测试 用U盘做测试** 
-    1. **AvoidRuntimeDefrag=YES** , **必要项目**
-    1. **DisableVariableWrite=YES**, 100/200/300系列主板没有nvram的, 需要YES, 如果设置为 NO, 那么表现就是睡眠会自动重启. 通常 **z370** 主板不需要开启此选项.
-    1. **EnableWriteUnprotector=YES**,  **必要项目**
-    1. **[SSDT-AWAC.dsl](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-AWAC.dsl)**, 300系列主板, 新版本BIOS必须要的SSDT, 需要编译为 aml 才可以使用. 具体google搜索如何把 dsl 编译为 aml. 加载方法见下面的说明. 如果想了解它的作用, 可以看这里的 [原理分析](https://github.com/cattyhouse/oc-guide/wiki/我的一些黑苹果笔记#解决华擎主板新bios无法启动macos)
-    1. **Kernel/Add Lilu.kext** 必须永远在第一条
-    1. **AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, AppleXcpmExtraMsrs=YES** 如果主板有 CFG LOCK 且无法从 BIOS 里面关掉的话,如果可以 BIOS 关掉 CFG LOCK, 这三个选项都设置为 NO
-    1. **PanicNoKextDump=YES** 启动过程中如果崩溃了, 禁止 Kext Dump, 这样可以看到具体引起崩溃的原因 (backtrace)
-    1. 启动参数在 **`config.plist/NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82/boot-args`** 这里加入或者修改. 建议的启动参数为 `-v alcid=1 keepsyms=1 debug=0x100` , 其中: `-v` 跑码, `alcid=1` 声卡id注入, `keepsyms=1 debug=0x100` 系统崩溃不自动重启, 方便查看崩溃原因.
-    1. **XhciPortLimit=YES**, 取消 macOS 15个 USB 端口的限制
-    1. **ConnectDrivers=YES**, 让 *.efi 文件可以顺利加载
-    1. **ConsoleControl=YES**, 更好的控制opencore菜单
-    1. **IgnoreTextInGraphics=YES**, 修复一些图形界面显示部分文字消息的问题
-    1. **ProvideConsoleGop=YES**, 一般需要为YES, 否则看不到 apple logo
-    1. **RequireSignature=NO, RequireVault=NO**, 关闭 OpenCore 的文件校验功能, 否则启动不了, 等你玩熟悉了可以去玩玩这个功能. **必要项目**
-    1. **PollAppleHotKeys=NO**, 关闭菜单界面的快捷键功能, 这个功能目前兼容性不是很好.
-    1. **Automatic=YES**, 根据 **Generic** 里面的信息自动注入 SMBIOS 所需要的其他信息.
-    1. **shikigva=16** , 加入这个启动参数, 实现用 AMD GPU 解码 Apple Tv, 解决无法播放的问题. 
+    - 重要的事情说三遍: **`用U盘做测试 用U盘做测试 用U盘做测试`** 
+    - **`AvoidRuntimeDefrag=YES`** , **必要项目**
+    - **`DisableVariableWrite=YES`**, 100/200/300系列主板没有nvram的, 需要YES, 如果设置为 NO, 那么表现就是睡眠会自动重启. 通常 **z370** 主板不需要开启此选项.
+    - **`EnableWriteUnprotector=YES`**,  **必要项目**
+    - **[`SSDT-AWAC.dsl`](https://github.com/acidanthera/OpenCorePkg/blob/master/Docs/AcpiSamples/SSDT-AWAC.dsl)**, 300系列主板, 新版本BIOS必须要的SSDT, 需要编译为 aml 才可以使用. 具体google搜索如何把 dsl 编译为 aml. 加载方法见下面的说明. 如果想了解它的作用, 可以看这里的 [原理分析](https://github.com/cattyhouse/oc-guide/wiki/我的一些黑苹果笔记#解决华擎主板新bios无法启动macos)
+    - **`Kernel/Add Lilu.kext`** 必须永远在第一条
+    - **`AppleCpuPmCfgLock=YES, AppleXcpmCfgLock=YES, AppleXcpmExtraMsrs=YES`** 如果主板有 CFG LOCK 且无法从 BIOS 里面关掉的话,如果可以 BIOS 关掉 CFG LOCK, 这三个选项都设置为 NO
+    - **`PanicNoKextDump=YES`** 启动过程中如果崩溃了, 禁止 Kext Dump, 这样可以看到具体引起崩溃的原因 (backtrace)
+    - 启动参数在 **`config.plist/NVRAM/Add/7C436110-AB2A-4BBB-A880-FE41995C9F82/boot-args`** 这里加入或者修改. 建议的启动参数为 `-v alcid=1 keepsyms=1 debug=0x100` , 其中: `-v` 跑码, `alcid=1` 声卡id注入, `keepsyms=1 debug=0x100` 系统崩溃不自动重启, 方便查看崩溃原因.
+    - **`XhciPortLimit=YES`**, 取消 macOS 15个 USB 端口的限制
+    - **`ConnectDrivers=YES`**, 让 *.efi 文件可以顺利加载
+    - **`ConsoleControl=YES`**, 更好的控制opencore菜单
+    - **`IgnoreTextInGraphics=YES`**, 修复一些图形界面显示部分文字消息的问题
+    - **`ProvideConsoleGop=YES`**, 一般需要为YES, 否则看不到 apple logo
+    - **`RequireSignature=NO, RequireVault=NO`**, 关闭 OpenCore 的文件校验功能, 否则启动不了, 等你玩熟悉了可以去玩玩这个功能. **必要项目**
+    - **`PollAppleHotKeys=NO`**, 关闭菜单界面的快捷键功能, 这个功能目前兼容性不是很好.
+    - **`Automatic=YES`**, 根据 **`Generic`** 里面的信息自动注入 SMBIOS 所需要的其他信息.
+    - **`shikigva=16`** , 加入这个启动参数, 实现用 AMD GPU 解码 Apple Tv, 解决无法播放的问题. 
+
 1. EFI下面的每一个 kext, efi, aml, 都必须在config.plist里面有对应的条目, 且设置为`Enabled=YES`, 否则他们不会加载
     - `OC/ACPI/*.aml` 对应 `config.plist/ACPI/Add`
     - `OC/Drivers/*.efi` 对应 `config.plist/UEFI/Drivers`
