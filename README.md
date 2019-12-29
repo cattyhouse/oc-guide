@@ -58,7 +58,7 @@
     - 方法三: 等待 WhateverGreen 更新, 计划是将 Apple TV 单独列出来, 让它使用 AMD 的 GPU 去解码 DRM 视频, 这样就不会影响其他 App 使用 iGPU 的解码编码功能. **Update: 1.3.5版 已经更新, 通过 shikigva=16 参数让部分 app 走 AMD GPU 解码. 1.3.6版 则可以用 shikigva=80 更进一步的支持Netflix等**
 ## 开启网络唤醒后, Wi-Fi ping 延迟在睡眠唤醒后非常高
 - 原因: 未知
-- 解决方法: 安装 AirportBrcmFixup.kext, 这个 kext 默认禁用 wowlan 的功能. 这样不影响 wolan的功能, 这样之后, 设置-节能- wake for network access 变成 wake for ethernet network access.
+- 解决方法: 安装 AirportBrcmFixup.kext ( **其中未发布的 2.0.5 版本对10.15 做了支持** ), 这个 kext 默认禁用 wowlan 的功能. 这样不影响 wolan的功能, 这样之后, 设置-节能- wake for network access 变成 wake for ethernet network access.
 - 唤醒macOS的方法: linux下面安装一个软件 wol, 例如 `pacman -S wol` , 然后运行 `wol macOS的有线网卡的MAC地址`, 不依赖BIOS的设置, 可以直接唤醒
 - 唤醒后测试 Wi-Fi 的延迟的方法: `ping 路由器ip地址 -S Wi-Fi的ip地址` 一般来说 5ms 以内都正常, 几十甚至上百ms 都是不正常的
 
