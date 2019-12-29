@@ -10,7 +10,7 @@
 - OpenCore 0.5 版本开始公测
     - 尝试模拟白苹果行为, 比如按住CMD+R的同时开机, 进入恢复模式, 等等.
 
-# 已知问题
+# 已知问题和解决方法
 
 ## iGPU 在解码编码过程中频率不超过 0.5 Ghz. 相关 [issue](https://github.com/acidanthera/bugtracker/issues/546)
 >  针对 iMac19,2 和 iMac19,1 的 SMBIOS. 
@@ -52,13 +52,13 @@
 
 > 总结: 如果有 AMD 独立显卡, 直接使用 iMacPro1,1, 关闭 iGPU, 一了百了.
 - 原因: 因为没有 Apple Firmware, 黑苹果上的 iGPU 无法硬件解码 Apple TV 的 DRM 内容
-- 解决方法: 
+- 解决方法 (方法三最好): 
     - 方法一: BIOS 关闭 iGPU, SMBIOS 采用 iMacPro1,1
     - 方法二: 无需关闭 iGPU, SMBIOS 依旧采用可爱的 iMac19,2 iMac19,1 加入启动参数 **shikigva=32 shiki-id=Mac-7BA5B2D9E42DDD94**, 这个目的就是让 AppleGVA 用 iMacPro1,1 的方式处理硬件解码和编码,也就是用 AMD的显卡, 但与此同时, iGPU 变成彻底无用了. 因为这个方法是对所有 App 生效
     - 方法三: 等待 WhateverGreen 更新, 计划是将 Apple TV 单独列出来, 让它使用 AMD 的 GPU 去解码 DRM 视频, 这样就不会影响其他 App 使用 iGPU 的解码编码功能. **Update: 1.3.5版 已经更新, 通过 shikigva=16 参数让部分 app 走 AMD GPU 解码. 1.3.6版 则可以用 shikigva=80 更进一步的支持Netflix等**
 ## 开启网络唤醒后, Wi-Fi ping 延迟在睡眠唤醒后非常高
 - 原因: 未知
-- 解决方法: 安装 AirportBrcmFixup.kext, 这个 kext 默认禁用 wowlan 的功能. 这样不影响 wolan的功能, 一句话: 禁用了无线网络的唤醒功能, 不影响有线网络的唤醒功能.
+- 解决方法: 安装 AirportBrcmFixup.kext, 这个 kext 默认禁用 wowlan 的功能. 这样不影响 wolan的功能, 一句话: 禁用了无线网络的唤醒功能, 不影响有线网络的唤醒功能. 这样之后, 设置-节能- wake for network access 变成 wake for ethernet network access.
 
 ## 唤醒后蓝牙硬件找不到
 - 原因: 转接板设计问题
