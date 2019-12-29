@@ -58,7 +58,7 @@
     - 方法三: 等待 WhateverGreen 更新, 计划是将 Apple TV 单独列出来, 让它使用 AMD 的 GPU 去解码 DRM 视频, 这样就不会影响其他 App 使用 iGPU 的解码编码功能. **Update: 1.3.5版 已经更新, 通过 shikigva=16 参数让部分 app 走 AMD GPU 解码. 1.3.6版 则可以用 shikigva=80 更进一步的支持Netflix等**
 ## 开启网络唤醒后, Wi-Fi ping 延迟在睡眠唤醒后非常高
 - 原因: 未知
-- 解决方法: 关闭网络唤醒
+- 解决方法: 安装 AirportBrcmFixup.kext, 这个 kext 默认禁用 wowlan 的功能. 这样不影响 wolan的功能, 一句话: 禁用了无线网络的唤醒功能, 不影响有线网络的唤醒功能.
 
 ## 唤醒后蓝牙硬件找不到
 - 原因: 转接板设计问题
