@@ -61,7 +61,7 @@
 - 解决方法: 安装 AirportBrcmFixup.kext ( **其中未发布的 2.0.5 版本对10.15 做了支持** ), 这个 kext 默认禁用 wowlan 的功能. 这样不影响 wolan的功能, 这样之后, 设置-节能- wake for network access 变成 wake for ethernet network access.
 - 唤醒macOS的方法: linux下面安装一个软件 wol, 例如 `pacman -S wol` , 然后运行 `wol macOS的有线网卡的MAC地址`, 不依赖BIOS的设置, 可以直接唤醒
 - 唤醒后测试 Wi-Fi 的延迟的方法: `ping 路由器ip地址 -S Wi-Fi的ip地址` 一般来说 5ms 以内都正常, 几十甚至上百ms 都是不正常的
-- **注意** 不要使用启动参数 keepsyms=1 debug=0x100 否则网络唤醒不起来. 
+- **注意** 如果使用 shutdown -s 睡眠的, 网络唤醒可能起不来. 
 
 ## 唤醒后蓝牙硬件找不到
 - 原因: 转接板设计问题
