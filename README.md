@@ -9,6 +9,7 @@
     - 但总体结构上保持一致.
 - OpenCore 0.5 版本开始公测
     - 尝试模拟白苹果行为, 比如按住CMD+R的同时开机, 进入恢复模式, 等等.
+- FwRuntimeServices.efi 和 VerifyMsrE2 现在集成到 OpenCore 的下载包里面了
 
 # 已知问题和解决方法
 
@@ -104,7 +105,7 @@
 
 ## 优点
 - 结构非常简单,没有安装文件pkg,跟搭积木一样简单,就算没有任何黑苹果经验, 也很容易上手
-- 体积非常小, 只有9k的`BOOTx64.efi`启动文件和~200KB的`OpenCore.efi`主文件
+- 体积非常小
 - 速度非常快
 - 文档非常完善,每一个配置都有详尽的说明
 - 全新的 Bootloader, 没有历史包袱
@@ -165,7 +166,7 @@ EFI
         - [`SSDT-EC-USBX.dsl`](https://github.com/acidanthera/OpenCorePkg/tree/master/Docs/AcpiSamples) Fake EC 和 USBX, 给 macOS 提供一个虚假的EC设备, 同时提供 USB 大电流支持, 需要自行编译为 aml
     - `Drivers` 存放文件系统驱动文件, 比如
         - [`ApfsDriverLoader.efi`](https://github.com/acidanthera/AppleSupportPkg/releases) 用于加载 macOS 内置的 apfs.efi , 读取APFS分区, **必要文件**
-        - [`FwRuntimeServices.efi`](https://github.com/acidanthera/AppleSupportPkg/releases) 提供模拟 nvram 等其他功能,  **必要文件**
+        - [`FwRuntimeServices.efi`](https://github.com/acidanthera/OpenCorePkg/releases) 提供模拟 nvram 等其他功能,  **必要文件**
         - [`HFSPlus.efi`](EFI/OC/Drivers/HFSPlus.efi) 提供HFS+文件系统的支持, 读取macOS的安装U盘以及Recovery分区需要此efi,  **必要文件**
     - `Kexts` 存放各种设备和硬件的驱动或者补丁.
         - [`Lilu.kext`](https://github.com/acidanthera/Lilu/releases) 一个框架式的kext,自身单独使用没有作用, 是其他kext的依赖, 必须第一个被加载.  **必要文件**
@@ -179,9 +180,9 @@ EFI
     - `Tools` 工具类efi, 这些工具在 OpenCore 启动界面可以看到, 目前只有下面2个工具, **不可以放入Drivers文件夹**
         - ~~`CleanNvram.efi`~~ 作用为清空nvram, 新版本 OpenCore 已经用内置的选项 AllowNvramReset=YES 取代这个 efi, 等效于启动到macOS恢复模式之后, 运行 `nvram -c`
         - [`Shell.efi`](https://github.com/acidanthera/OpenCoreShell/releases) 一个修改版的 `UEFI SHELL`, 可以做很多有趣的事情.
-        - [`VerifyMsrE2`](https://github.com/acidanthera/AppleSupportPkg/releases), 检查主板是否有 CFG LOCK
-    - `OpenCore.efi` OpenCore的主引导文件, 体积约200KB
-    - `config.plist` OpenCore的主要配置文件, 可以使用PlistEdit Pro 或者 Xcode 可视化编辑.
+        - [`VerifyMsrE2`](https://github.com/acidanthera/OpenCorePkg/releases), 检查主板是否有 CFG LOCK
+    - `OpenCore.efi` OpenCore的主引导文件
+    - `config.plist` OpenCore的主要配置文件, 可以使用 PlistEdit Pro 或者 ProperTree 可视化编辑.
 
 > 所以, OC下面总共有4个文件夹, 1个主文件, 和一个配置文件, 是不是非常简洁
 
@@ -212,7 +213,7 @@ EFI
 
 ## 配置config.plist
 
-- config.plist 请使用 PlistEdit Pro 或者 Xcode 进行可视化编辑, 避免出错.
+- config.plist 请使用 PlistEdit Pro 或者 ProperTree 进行可视化编辑, 避免出错.
 - 无论首次安装或者更新, 请务必以你下载的 OpenCore 里面的 sample.plist 为基础做设置. 对于更新来说, 请自行比较新旧版的 sample.plist 的变化, 然后适配到你的 config.plist 里面去
 - 请勿删除 sample.plist 里面的条目, 很可能会破坏结构, 大部分配置都可以设置 YES/NO (PlistEdit Pro) 或者 true/false (Xcode) 来 启用/禁用
 - 请勿使用来自 Clover 的 kexts, 他们并不兼容.
@@ -236,7 +237,7 @@ EFI
     - **`RequireSignature=NO, RequireVault=NO`**, 关闭 OpenCore 的文件校验功能, 否则启动不了, 等你玩熟悉了可以去玩玩这个功能. **必要项目**
     - **`PollAppleHotKeys=NO`**, 关闭菜单界面的快捷键功能, 这个功能目前兼容性不是很好.
     - **`Automatic=YES`**, 根据 **`Generic`** 里面的信息自动注入 SMBIOS 所需要的其他信息.
-    - **`shikigva=16`** , 加入这个启动参数, 实现用 AMD GPU 解码 Apple Tv, 解决无法播放的问题. 
+    - **`shikigva=80`** , 加入这个启动参数, 实现用 AMD GPU 解码 Apple Tv, 解决无法播放的问题. 
 
 1. EFI下面的每一个 kext, efi, aml, 都必须在config.plist里面有对应的条目, 且设置为`Enabled=YES`, 否则他们不会加载
     - `OC/ACPI/*.aml` 对应 `config.plist/ACPI/Add`
