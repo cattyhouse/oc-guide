@@ -38,7 +38,7 @@
 7. 给启动文件命名
     1. 在文件夹 **`com.apple.recovery.boot`** 下面新建一个隐藏文件 **`.contentDetails`**
     1. 内容可以随便写, 比如 `Mojave Boot From Recovery`, 这个名字会出现在OpenCore的启动菜单上.
-8. 最终U盘上的文件结构看起来像这样:
+8. 最终U盘上的文件结构看起来像这样 ( **注意 EFI文件夹与com.apple.recovery.boot文件夹是并列关系** ):
 
     ````
     EFI
