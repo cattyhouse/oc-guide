@@ -16,7 +16,7 @@
     1. 获取 python 脚本: 
 
         ```bash
-        curl -OL https://raw.githubusercontent.com/acidanthera/MacInfoPkg/master/macrecovery/macrecovery.py
+        curl -OL https://raw.githubusercontent.com/acidanthera/OpenCorePkg/master/Utilities/macrecovery/macrecovery.py
         ```
 
     1. 下载最新的 macOS Recovery: 
@@ -25,7 +25,7 @@
         /usr/bin/python macrecovery.py -b Mac-E43C1C25D4880AD6 -m 00000000000000000 download
         ```
 
-    1. 下载其他 macOS 版本的 Recovery 的命令请参考 [recovery_urls.txt](https://github.com/acidanthera/MacInfoPkg/blob/master/macrecovery/recovery_urls.txt), 命令最后需要加一个 download, 如上. 
+    1. 下载其他 macOS 版本的 Recovery 的命令请参考 [recovery_urls.txt](https://raw.githubusercontent.com/acidanthera/OpenCorePkg/master/Utilities/macrecovery/recovery_urls.txt), 命令最后需要加一个 download, 如上. 
     
     1. 更多的控制参数请参考 `/usr/bin/python macrecovery.py --help`
 
