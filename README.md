@@ -1,6 +1,7 @@
 
+# 本文现在只能做一个大致的参考, OpenCore每天都在变化, 请以官方的文档为主
 # 更新记录
-- 最近更新: 2019.12.17
+- 最近更新: 2020.05.23
 - 本文最开始写的时候是 OpenCore 0.03 版本, 到现在已经变化了不少.
 - 建议下载最新的 OpenCore 开始, 并留意我的注释
 - OpenCore 0.04 版本开始, 有比较大的变化:
@@ -10,6 +11,7 @@
 - OpenCore 0.5 版本开始公测
     - 尝试模拟白苹果行为, 比如按住CMD+R的同时开机, 进入恢复模式, 等等.
 - FwRuntimeServices.efi 和 VerifyMsrE2 现在集成到 OpenCore 的下载包里面了
+- FwRuntimeServices.efi 已经改名为 OpenRuntime.efi
 
 # 已知问题和解决方法
 
