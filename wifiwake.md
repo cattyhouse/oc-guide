@@ -34,43 +34,43 @@
 
 1. 删除讨厌的安全印记:
 
-````
-xattr -d -r com.apple.quarantine ~/Downloads/sleepwatcher_2.2.1/sleepwatcher
-````
-
+    ````
+    xattr -d -r com.apple.quarantine ~/Downloads/sleepwatcher_2.2.1/sleepwatcher
+    ````
 1. 复制 SleepWatcher 到可执行目录
 
-````
-cp -af ~/Downloads/sleepwatcher_2.2.1/sleepwatcher /usr/local/sbin/
-````
+    ````
+    cp -af ~/Downloads/sleepwatcher_2.2.1/sleepwatcher /usr/local/sbin/
+    ````
+
 1. 创建 .sleep 和 .wakeup 文件
 
-````
-echo 'networksetup -setairportpower en1 off' > ~/.sleep
-echo 'sleep 5' > ~/.wakeup
-echo 'networksetup -setairportpower en1 on' >> ~/.wakeup
+    ````
+    echo 'networksetup -setairportpower en1 off' > ~/.sleep
+    echo 'sleep 5' > ~/.wakeup
+    echo 'networksetup -setairportpower en1 on' >> ~/.wakeup
 
-chmod +x ~/.sleep
-chmod + ~/.wakeup
-````
+    chmod +x ~/.sleep
+    chmod + ~/.wakeup
+    ````
 1. 测试
 
-````
-- 终端执行下面的命令
- /usr/local/sbin/sleepwatcher  -V -s ~/.sleep -w ~/.wakeup
-- 开启网络唤醒
-- 将 macOS 睡眠
-- 唤醒 macOS
-- 测试 Wi-Fi 的 ping 和 iperf3, 前文所述
-````
+    ````
+    - 终端执行下面的命令
+    /usr/local/sbin/sleepwatcher  -V -s ~/.sleep -w ~/.wakeup
+    - 开启网络唤醒
+    - 将 macOS 睡眠
+    - 唤醒 macOS
+    - 测试 Wi-Fi 的 ping 和 iperf3, 前文所述
+    ````
 
 1. 开启启动
 
-````
-cp -af ~/Downloads/sleepwatcher_2.2.1/config/de.bernhard-baehr.sleepwatcher-20compatibility-localuser.plist ~/Library/LaunchAgents/
+    ````
+    cp -af ~/Downloads/sleepwatcher_2.2.1/config/de.bernhard-baehr.sleepwatcher-20compatibility-localuser.plist ~/Library/LaunchAgents/
 
-launchctl load -w ~/Library/LaunchAgents/de.bernhard-baehr.sleepwatcher-20compatibility-localuser.plist
+    launchctl load -w ~/Library/LaunchAgents/de.bernhard-baehr.sleepwatcher-20compatibility-localuser.plist
 
-# 查看是否运行成功
-ps aux | grep sleepwatcher
-````
+    # 查看是否运行成功
+    ps aux | grep sleepwatcher
+    ````
