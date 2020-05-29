@@ -51,7 +51,7 @@
     echo 'networksetup -setairportpower en1 on' >> ~/.wakeup
 
     chmod +x ~/.sleep
-    chmod + ~/.wakeup
+    chmod +x ~/.wakeup
     ````
 1. 测试
 
@@ -64,7 +64,7 @@
     - 测试 Wi-Fi 的 ping 和 iperf3, 前文所述
     ````
 
-1. 开启启动
+1. 开机启动
 
     ````
     cp -af ~/Downloads/sleepwatcher_2.2.1/config/de.bernhard-baehr.sleepwatcher-20compatibility-localuser.plist ~/Library/LaunchAgents/
