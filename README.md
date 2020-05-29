@@ -60,11 +60,14 @@
     - 方法二: 无需关闭 iGPU, SMBIOS 依旧采用可爱的 iMac19,2 iMac19,1 加入启动参数 **shikigva=32 shiki-id=Mac-7BA5B2D9E42DDD94**, 这个目的就是让 AppleGVA 用 iMacPro1,1 的方式处理硬件解码和编码,也就是用 AMD的显卡, 但与此同时, iGPU 变成彻底无用了. 因为这个方法是对所有 App 生效
     - 方法三: 等待 WhateverGreen 更新, 计划是将 Apple TV 单独列出来, 让它使用 AMD 的 GPU 去解码 DRM 视频, 这样就不会影响其他 App 使用 iGPU 的解码编码功能. **Update: 1.3.5版 已经更新, 通过 shikigva=16 参数让部分 app 走 AMD GPU 解码. 1.3.6版 则可以用 shikigva=80 更进一步的支持Netflix等**
 ## 开启网络唤醒后, Wi-Fi ping 延迟在睡眠唤醒后非常高
-- 原因: 未知
-- 解决方法: 安装 AirportBrcmFixup.kext ( **其中未发布的 2.0.5 版本对10.15 做了支持** ), 这个 kext 默认禁用 wowlan 的功能. 这样不影响 wolan的功能, 这样之后, 设置-节能- wake for network access 变成 wake for ethernet network access.
+- 原因: 未知, 推荐如下 `解决方法 2` 
+### 解决方法 1 : 
+- 安装 AirportBrcmFixup.kext ( **其中未发布的 2.0.5 版本对10.15 做了支持** ), 这个 kext 默认禁用 wowlan 的功能. 这样不影响 wolan的功能, 这样之后, 设置-节能- wake for network access 变成 wake for ethernet network access.
 - 唤醒macOS的方法: linux下面安装一个软件 wol, 例如 `pacman -S wol` , 然后运行 `wol macOS的有线网卡的MAC地址`
 - 唤醒后测试 Wi-Fi 的延迟的方法: `ping 路由器ip地址 -S Wi-Fi的ip地址` 一般来说 5ms 以内都正常, 几十甚至上百ms 都是不正常的
-- **注意** BIOS 要开启网络唤醒, 不然有时候不灵
+
+### 解决方法 2 :
+- [**更好的解决方法**](wifiwake.md), 通过睡眠前自动关闭 Wi-Fi, 唤醒后自动打开 Wi-Fi 来解决这个问题
 
 ## 唤醒后蓝牙硬件找不到
 - 原因: 转接板设计问题
