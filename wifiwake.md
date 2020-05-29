@@ -20,7 +20,7 @@
 
 ## 解决方法
 
-### 所需要的工具
+### 工具
 
 - 关闭 Wi-Fi 的命令 ` networksetup -setairportpower en1 off`, 通常有线网络是 en0, Wi-Fi 是 en1, 查看具体名称, OPT+鼠标点击Wi-Fi图标, 获取到这个`网卡名称`
 
