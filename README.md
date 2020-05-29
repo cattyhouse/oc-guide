@@ -20,7 +20,7 @@
 
 > 总结: 如果有 AMD 独立显卡, 直接使用 iMacPro1,1, 关闭 iGPU, 一了百了.
 - 原因: WhateverGreen 屏蔽了 Intel GuC 的加载.
-- 解决方法:
+- 解决方法 1 :
     > 如果用 iMacPro1,1 就没必要采用下面的操作, 因为 iGPU 已经关闭不起作用.
 
     1. Disable 掉 WhateverGreen.kext 的加载
@@ -50,6 +50,10 @@
             Count: 0
             TableSignature: 0
             ````
+- 解决方法 2 :
+    - 更新到 weg 1.3.8 以及以上
+    - 加入启动参数 `igfxfw=2` 启用 GuC
+    
 ## iGPU 无法播放 Apple TV 里面的电视剧和电影, 相关 [issue1](https://github.com/acidanthera/bugtracker/issues/519), [issue2](https://github.com/acidanthera/bugtracker/issues/582)
 >  针对 iMac19,2 和 iMac19,1 的 SMBIOS. 
 
