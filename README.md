@@ -170,7 +170,7 @@ EFI
 - `EFI/BOOT/BOOTx64.efi` 电脑启动的时候支持UEFI的主板会去读取这个文件
 - `EFI/OC` OpenCore 存放目录
     - `ACPI` 存放自定义的ssdt aml文件, 比如 (aml为二进制文件, 是我们需要的最终文件. dsl为源文件, 需要用 [MaciASL](https://github.com/acidanthera/MaciASL/releases)打开另存为aml.)
-        - [`SSDT-PLUG.aml`](EFI/OC/ACPI/SSDT-PLUG.aml) 开启硬件变频功能, 作用于CPU, iGPU, dGPU. 注意此文件里面的 CPU 的位置和名称需要与 DSDT.aml 里面的一致, 可能的位置: _SB _PR 等, 可能的名称: PR00 CPU0 等, 不同的主板各不相同.
+        - [`SSDT-PLUG.dsl`](https://github.com/acidanthera/OpenCorePkg/tree/master/Docs/AcpiSamples) 开启硬件变频功能, 作用于CPU, iGPU, dGPU. 需要自行编译为 aml
         - [`SSDT-AWAC.dsl`](https://github.com/acidanthera/OpenCorePkg/tree/master/Docs/AcpiSamples) 300系列的主板用最近更新的 BIOS 后, RTC 失效, 这个 SSDT 作用是启用 RTC, 需要自行编译为 aml
         - [`SSDT-EC-USBX.dsl`](https://github.com/acidanthera/OpenCorePkg/tree/master/Docs/AcpiSamples) Fake EC 和 USBX, 给 macOS 提供一个虚假的EC设备, 同时提供 USB 大电流支持, 需要自行编译为 aml
     - `Drivers` 存放文件系统驱动文件, 比如
