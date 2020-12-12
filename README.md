@@ -1,3 +1,6 @@
+# 范例
+
+https://github.com/cattyhouse/opencore-efi-instance
 
 # 本文现在只能做一个大致的参考, OpenCore每天都在变化, 请以官方的文档为主
 # 更新记录
